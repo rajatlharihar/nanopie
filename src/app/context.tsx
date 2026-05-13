@@ -8,18 +8,21 @@ export interface QueueItem {
   type: 'New Vendor' | 'Funding Request' | 'Flagged Case';
   trustStatus: 'Verified' | 'Limited Data' | 'Risk';
   summary: string;
-  suggestedAction: 'Approve' | 'Review' | 'Reject';
+  suggestedAction: 'Approve' | 'Review' | 'Reject' | 'Recommend Approval' | 'Needs Review' | 'High Risk Flag';
   amount?: string;
-  // Additional detailed info for review
   category?: string;
   location?: string;
   kycStatus?: string;
   verified?: boolean;
+  cibilScore?: number;
+  platformRating?: 'A' | 'B' | 'C';
   signals?: { label: string; status: string; description: string; }[];
   trustIndicators?: { type: string; active: boolean; }[];
   request?: { amount: string; purpose: string; returnType: string; };
   suggestionReason?: string;
 }
+
+export type SystemMode = 'Standard' | 'High Verification' | 'Growth';
 
 export interface Decision {
   id: string;
@@ -49,6 +52,8 @@ export interface Collection {
 interface StakeholderContextType {
   stakeholder: Stakeholder;
   setStakeholder: (s: Stakeholder) => void;
+  systemMode: SystemMode;
+  setSystemMode: (m: SystemMode) => void;
   queue: QueueItem[];
   setQueue: React.Dispatch<React.SetStateAction<QueueItem[]>>;
   recentDecisions: Decision[];
@@ -64,18 +69,21 @@ const StakeholderContext = createContext<StakeholderContextType | undefined>(und
 
 export function StakeholderProvider({ children }: { children: ReactNode }) {
   const [stakeholder, setStakeholder] = useState<Stakeholder>('admin');
+  const [systemMode, setSystemMode] = useState<SystemMode>('Standard');
   const [queue, setQueue] = useState<QueueItem[]>([
     {
       id: "v-1",
       vendorName: "Rajesh & Sons Logistics",
       type: "New Vendor",
       trustStatus: "Verified",
-      suggestedAction: "Approve",
-      suggestionReason: "High revenue consistency and verified tax filings in Mumbai.",
+      suggestedAction: "Recommend Approval",
+      suggestionReason: "High revenue consistency (85th percentile) and verified tax filings. CIBIL score 810 indicates elite credibility.",
       category: "Supply Chain",
       location: "Mumbai, MH",
       kycStatus: "Fully Verified",
       verified: true,
+      cibilScore: 810,
+      platformRating: 'A',
       summary: "Logistics partner for western region distribution.",
       signals: [
         { label: "GST Compliance", status: "Stable", description: "Regular filings for the last 24 months." },
@@ -97,12 +105,14 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
       vendorName: "Aman Deep Tech Solutions",
       type: "Funding Request",
       trustStatus: "Risk",
-      suggestedAction: "Reject",
-      suggestionReason: "Recent drop in active user counts and inconsistent server spends.",
+      suggestedAction: "High Risk Flag",
+      suggestionReason: "Recent drop in active user counts (-30%) and inconsistent server spends. CIBIL score 620 is below threshold for direct approval.",
       category: "IT Services",
       location: "Bangalore, KA",
       kycStatus: "Partially Verified",
       verified: false,
+      cibilScore: 620,
+      platformRating: 'C',
       summary: "Cloud infrastructure provider for internal tools.",
       signals: [
         { label: "Active Users", status: "Inconsistent", description: "30% drop in active sessions since Oct." },
@@ -144,6 +154,7 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   return (
     <StakeholderContext.Provider value={{ 
       stakeholder, setStakeholder, 
+      systemMode, setSystemMode,
       queue, setQueue, 
       recentDecisions, setRecentDecisions,
       complaints, setComplaints,

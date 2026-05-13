@@ -1,37 +1,19 @@
-import React, { useState, useMemo } from "react";
-import { 
-  ShieldCheck, 
-  TrendingUp, 
-  AlertCircle, 
-  ArrowRight, 
-  CheckCircle2, 
-  XCircle,
-  Clock,
-  ChevronRight,
-  Search,
-  Calendar,
-  CreditCard,
-  Plus,
-  MoreHorizontal,
-  ArrowUpRight,
-  MessageSquare,
-  Filter,
-  Download,
-  AlertTriangle,
-  Activity,
-  HeartPulse,
-  BrainCircuit,
-  Zap,
   Check,
-  ShieldAlert
+  ShieldAlert,
+  Globe,
+  Settings2,
+  Rocket,
+  ZapOff
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link, useNavigate } from "react-router";
-import { useStakeholder } from "../context";
+import { useStakeholder, SystemMode } from "../context";
+import { GeoMap } from "../components/GeoMap";
+import { CreditInsight } from "../components/CreditInsight";
 
 export function AdminDashboard() {
   const navigate = useNavigate();
-  const { complaints, collections, resolveComplaint } = useStakeholder();
+  const { complaints, collections, resolveComplaint, queue, systemMode, setSystemMode } = useStakeholder();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showWidgetPanel, setShowWidgetPanel] = useState(false);
@@ -87,6 +69,52 @@ export function AdminDashboard() {
           Analyze Risk Now
         </button>
       </motion.div>
+
+      {/* System Mode Selector & Stats Bar */}
+      <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between bg-white/40 backdrop-blur-md p-6 rounded-[32px] border border-[#E4EEF0]">
+        <div className="space-y-4 w-full lg:w-auto">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#075056]/40 font-bold">Strategic Operational Mode</p>
+          <div className="flex flex-wrap gap-3">
+            {[
+              { id: 'Standard', icon: Settings2, label: 'Standard Control', desc: 'Default verification protocols' },
+              { id: 'High Verification', icon: ShieldCheck, label: 'High Trust Only', desc: 'Elevated fraud detection' },
+              { id: 'Growth', icon: Rocket, label: 'Growth Surge', desc: 'Accelerated node approvals' }
+            ].map(mode => (
+              <button
+                key={mode.id}
+                onClick={() => setSystemMode(mode.id as SystemMode)}
+                className={`flex items-center space-x-3 px-6 py-3 rounded-2xl border transition-all ${
+                  systemMode === mode.id 
+                    ? 'bg-[#075056] text-white border-[#075056] shadow-lg shadow-[#075056]/20' 
+                    : 'bg-white text-[#075056] border-[#E4EEF0] hover:border-[#075056]/30'
+                }`}
+              >
+                <mode.icon size={16} />
+                <div className="text-left">
+                  <p className="text-xs font-bold">{mode.label}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full lg:w-auto pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-[#E4EEF0] lg:pl-12">
+          {[
+            { label: 'Funding Velocity', val: '₹1.2L/day', trend: '+14%', color: 'text-[#075056]' },
+            { label: 'Active Campaigns', val: '42', trend: '+2', color: 'text-[#075056]' },
+            { label: 'System Risk', val: 'Low', trend: 'Stable', color: 'text-emerald-600' },
+            { label: 'Default Rate', val: '0.4%', trend: '-0.1%', color: 'text-[#FF5B04]' }
+          ].map(stat => (
+            <div key={stat.label} className="space-y-1">
+              <p className="text-[9px] uppercase tracking-widest text-[#075056]/40 font-bold">{stat.label}</p>
+              <div className="flex items-center space-x-2">
+                <span className={`text-lg font-medium ${stat.color}`}>{stat.val}</span>
+                <span className="text-[8px] text-emerald-600 font-bold">{stat.trend}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Header & Functional Search */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -161,6 +189,52 @@ export function AdminDashboard() {
         {/* Left Column: Alerts & Operational Queue */}
         <div className="col-span-12 lg:col-span-8 space-y-12">
           
+          {/* GEOSPATIAL INTELLIGENCE PREVIEW */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Globe size={20} className="text-[#075056]/20" />
+                <h2 className="text-xl text-[#075056]">Regional Surveillance</h2>
+              </div>
+              <Link to="/intelligence" className="text-[10px] text-[#FF5B04] uppercase tracking-widest font-bold hover:underline">Full Map Access</Link>
+            </div>
+            <GeoMap />
+          </div>
+
+          {/* ATTENTION REQUIRED - PROACTIVE MONITORING */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center">
+                  <ZapOff size={16} />
+                </div>
+                <h2 className="text-xl text-[#075056]">Attention Required</h2>
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">3 Potential Default Clusters</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: 'Kashmiri Crafts', issue: 'Slow Growth', score: 64, impact: 'Medium' },
+                { name: 'Bengal Spices', issue: 'Inconsistent Returns', score: 58, impact: 'High' },
+                { name: 'Surat Silk Mills', issue: 'Liquidity Drop', score: 42, impact: 'Critical' }
+              ].map(item => (
+                <div key={item.name} className="bg-white p-5 rounded-[24px] border border-[#E4EEF0] space-y-4 hover:shadow-lg transition-all border-l-4 border-l-orange-500">
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-medium text-[#075056]">{item.name}</h4>
+                    <p className="text-[10px] text-orange-600 font-bold">{item.issue}</p>
+                  </div>
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-[8px] uppercase text-[#075056]/30 font-bold">Vitality Score</p>
+                      <p className="text-xl text-[#075056]">{item.score}%</p>
+                    </div>
+                    <span className="text-[9px] bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full font-bold uppercase">{item.impact}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
           {/* URGENT COMPLAINTS - FLOW 3 (Implicit) */}
           {activeWidgets.includes('complaints') && (
             <div className="space-y-6">
@@ -228,36 +302,54 @@ export function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#F8FAFC]">
-                      {filteredQueue.map((item) => (
+                      {queue.map((item) => (
                         <tr key={item.id} className="hover:bg-[#F8FAFC] transition-colors group">
                           <td className="px-8 py-5 text-xs text-[#075056]/40 font-mono">{item.id}</td>
                           <td className="px-8 py-5">
-                            <div>
-                              <p className="text-sm font-medium text-[#075056]">{item.name}</p>
-                              <p className="text-[10px] text-[#075056]/30">{item.category}</p>
+                            <div className="space-y-1">
+                              <p className="text-sm font-medium text-[#075056]">{item.vendorName}</p>
+                              <div className="flex items-center space-x-2">
+                                <span className="text-[9px] text-[#075056]/30">{item.category}</span>
+                                {item.platformRating && (
+                                  <span className="text-[8px] px-1.5 py-0.5 rounded bg-[#075056]/5 text-[#075056] font-bold">Rating {item.platformRating}</span>
+                                )}
+                              </div>
                             </div>
                           </td>
                           <td className="px-8 py-5">
-                            <span className={`text-[10px] px-3 py-1 rounded-full border ${
-                              item.status === 'Verified' ? 'bg-[#16232B]/5 text-[#16232B] border-[#16232B]/10' :
-                              item.status === 'Risk' ? 'bg-[#FF5B04]/5 text-[#FF5B04] border-[#FF5B04]/10' :
-                              'bg-[#075056]/5 text-[#075056] border-[#075056]/10'
-                            }`}>
-                              {item.status}
-                            </span>
+                            <div className="flex items-center space-x-4">
+                              <span className={`text-[10px] px-3 py-1 rounded-full border ${
+                                item.trustStatus === 'Verified' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                                item.trustStatus === 'Risk' ? 'bg-orange-50 text-orange-700 border-orange-100' :
+                                'bg-blue-50 text-blue-700 border-blue-100'
+                              }`}>
+                                {item.trustStatus}
+                              </span>
+                              {item.cibilScore && (
+                                <div className="flex items-center space-x-1">
+                                  <ShieldCheck size={10} className="text-emerald-600" />
+                                  <span className="text-[10px] font-bold text-[#075056]/60">{item.cibilScore}</span>
+                                </div>
+                              )}
+                            </div>
                           </td>
                           <td className="px-8 py-5">
-                            <div className="flex items-center space-x-2">
-                              <div className={`w-1 h-1 rounded-full ${item.risk === 'High' ? 'bg-[#FF5B04]' : item.risk === 'Medium' ? 'bg-[#075056]' : 'bg-[#16232B]'}`} />
-                              <span className="text-xs text-[#075056]/60">{item.risk} Risk</span>
+                            <div className="space-y-1">
+                              <p className={`text-[10px] font-bold uppercase tracking-widest ${
+                                item.suggestedAction.includes('High Risk') ? 'text-orange-600' : 
+                                item.suggestedAction.includes('Recommend') ? 'text-emerald-600' : 'text-[#075056]/40'
+                              }`}>
+                                {item.suggestedAction}
+                              </p>
+                              <p className="text-[9px] text-[#075056]/30 italic truncate max-w-[200px]">{item.suggestionReason}</p>
                             </div>
                           </td>
                           <td className="px-8 py-5 text-right">
                             <Link 
                               to={`/review/${item.id}`}
-                              className="text-[10px] font-bold text-[#075056] uppercase tracking-widest hover:text-[#FF5B04] transition-colors"
+                              className="px-4 py-2 rounded-xl bg-[#075056] text-white text-[9px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all"
                             >
-                              Review Case
+                              Deep Audit
                             </Link>
                           </td>
                         </tr>

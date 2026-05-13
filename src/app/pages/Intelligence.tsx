@@ -1,24 +1,8 @@
-import React, { useState } from "react";
-import { 
-  Sparkles, 
-  TrendingUp, 
-  ShieldAlert, 
-  Zap, 
-  Activity, 
-  Download, 
-  ChevronDown,
-  ArrowUpRight,
-  Target,
-  Layers,
-  FileText,
-  Plus,
-  AlertTriangle,
-  HeartPulse,
-  BrainCircuit,
-  ArrowRight,
-  FileDown,
   Check,
-  Globe
+  Globe,
+  MapPin,
+  LocateFixed,
+  Filter
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { 
@@ -36,6 +20,8 @@ import {
   Cell
 } from 'recharts';
 import { motion, AnimatePresence } from "motion/react";
+import { GeoMap } from "../components/GeoMap";
+import { MOCK_VENDORS } from "../data";
 
 const FORECAST_DATA = [
   { month: 'Apr', projected: 450000, actual: 420000 },
@@ -76,18 +62,38 @@ export function Intelligence() {
           <p className="text-sm text-[#075056]/40 italic">System reports and analytical insights for nanopie.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center space-x-2 bg-white border border-[#E4EEF0] px-4 py-2.5 rounded-2xl text-[10px] text-[#075056] font-bold">
+            <LocateFixed size={14} className="text-[#FF5B04]" />
+            <span>INDIA REGION: ACTIVE</span>
+          </div>
           <div className="relative group">
-            <button className="flex items-center space-x-2 bg-[#075056] text-white px-6 py-2.5 rounded-2xl text-xs hover:opacity-90 transition-all">
+            <button className="flex items-center space-x-2 bg-[#075056] text-white px-6 py-2.5 rounded-2xl text-xs hover:opacity-90 transition-all shadow-lg shadow-[#075056]/20">
               <Download size={14} />
-              <span>{reportType} Intelligence Report</span>
-              <ChevronDown size={14} />
+              <span>Export intelligence</span>
             </button>
-            <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-[#E4EEF0] rounded-2xl p-2 hidden group-hover:block z-50">
-              <button onClick={() => setReportType('Weekly')} className="w-full text-left px-4 py-2 text-xs hover:bg-[#F8FAFC] rounded-xl">Weekly Insights</button>
-              <button onClick={() => setReportType('Monthly')} className="w-full text-left px-4 py-2 text-xs hover:bg-[#F8FAFC] rounded-xl">Monthly Analysis</button>
-            </div>
           </div>
         </div>
+      </div>
+
+      {/* Geospatial Map Section */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between px-2">
+          <div className="flex items-center space-x-3">
+            <Globe size={24} className="text-[#075056]/40" />
+            <h2 className="text-2xl text-[#075056]">Spatial Node Distribution</h2>
+          </div>
+          <div className="flex items-center space-x-4">
+             <div className="flex -space-x-2">
+               {[1,2,3,4].map(i => (
+                 <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-[#075056]/10 flex items-center justify-center overflow-hidden">
+                   <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="Admin" className="w-full h-full object-cover" />
+                 </div>
+               ))}
+             </div>
+             <span className="text-[10px] text-[#075056]/40 font-bold uppercase tracking-widest">4 Analysts Viewing</span>
+          </div>
+        </div>
+        <GeoMap />
       </div>
 
       {/* Main Intelligence Engine */}

@@ -11,8 +11,11 @@ import {
   CheckCircle2,
   XCircle,
   FileText,
-  AlertTriangle,
-  TrendingUp
+  TrendingUp,
+  Globe,
+  Award,
+  Zap,
+  Target
 } from "lucide-react";
 import { 
   ResponsiveContainer,
@@ -25,6 +28,9 @@ import {
   BarChart,
   Bar
 } from 'recharts';
+import { CreditInsight } from "../components/CreditInsight";
+import { ReturnValidator } from "../components/ReturnValidator";
+import { MOCK_VENDORS } from "../data";
 
 const CHART_DATA = [
   { name: 'Jan', revenue: 85000, investors: 12 },
@@ -37,34 +43,19 @@ export function VendorDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mock data for the selected vendor
-  const vendor = {
-    id: id,
-    name: "Punjab Dairy Farm",
-    type: "Agri-tech",
-    status: "Verification Pending",
-    upgradeIntent: "Automation of milk pasteurization line and regional cold-storage expansion.",
-    joinedDate: "April 12, 2026",
-    location: "Ludhiana, PB",
-    email: "contact@punjabdairy.in",
-    phone: "+91 98765 43210",
-    trustScore: 92,
-    metrics: [
-      { label: "Monthly Revenue", value: "₹1,24,000", change: "+8%" },
-      { label: "Active Investors", value: "24", change: "+2" },
-      { label: "Risk Factor", value: "Low", change: "Stable" },
-    ],
-    documents: [
-      { name: "Business License.pdf", status: "Verified", date: "Apr 10" },
-      { name: "Tax Returns 2025.pdf", status: "Verified", date: "Apr 10" },
-      { name: "KYC Proof of ID.pdf", status: "Pending", date: "Apr 11" },
-    ],
-    history: [
-      { event: "Application Submitted", date: "Apr 10, 2026", user: "System" },
-      { event: "Document Review Started", date: "Apr 11, 2026", user: "Alex Rivera" },
-      { event: "Revenue Verified", date: "Apr 12, 2026", user: "Alex Rivera" },
-    ]
-  };
+  const vendor = MOCK_VENDORS.find(v => v.id === id) || MOCK_VENDORS[0];
+
+  const metrics = [
+    { label: "Monthly Revenue", value: `₹${vendor.raisedAmount.toLocaleString()}`, change: "+8%" },
+    { label: "Active Investors", value: vendor.investorsCount.toString(), change: "+2" },
+    { label: "Funding Velocity", value: `₹${vendor.fundingVelocity?.toLocaleString()}/day`, change: "Stable" },
+  ];
+
+  const documents = [
+    { name: "Business License.pdf", status: "Verified", date: "Apr 10" },
+    { name: "Tax Returns 2025.pdf", status: "Verified", date: "Apr 10" },
+    { name: "KYC Proof of ID.pdf", status: vendor.kycStatus === 'verified' ? 'Verified' : 'Pending', date: "Apr 11" },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto space-y-12 pb-32 px-4">
@@ -93,16 +84,20 @@ export function VendorDetail() {
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <button className="px-6 py-2.5 rounded-[12px] border border-[#E4EEF0] text-xs font-bold uppercase tracking-widest text-[#075056] hover:bg-[#F8FAFC] transition-colors">
-              Reject Application
-            </button>
-            <button 
-              onClick={() => navigate('/success')}
-              className="px-8 py-2.5 rounded-[12px] bg-[#FF5B04] text-white text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-[#FF5B04]/20"
-            >
-              Approve Vendor
-            </button>
+          <div className="flex items-center space-x-4">
+            <CreditInsight score={vendor.cibilScore} rating={vendor.platformRating} />
+            <div className="w-[1px] h-10 bg-[#E4EEF0] mx-2 hidden md:block"></div>
+            <div className="flex items-center space-x-3">
+              <button className="px-6 py-2.5 rounded-[12px] border border-[#E4EEF0] text-xs font-bold uppercase tracking-widest text-[#075056] hover:bg-[#F8FAFC] transition-colors">
+                Reject
+              </button>
+              <button 
+                onClick={() => navigate('/success')}
+                className="px-8 py-2.5 rounded-[12px] bg-[#FF5B04] text-white text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-[#FF5B04]/20"
+              >
+                Approve Node
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -112,24 +107,32 @@ export function VendorDetail() {
         <div className="lg:col-span-8 space-y-12">
           {/* Stats Grid */}
           <div className="grid grid-cols-3 gap-6">
-            {vendor.metrics.map((metric) => (
+            {metrics.map((metric) => (
               <div key={metric.label} className="p-6 rounded-[24px] border border-[#E4EEF0] bg-white space-y-2 shadow-sm">
                 <p className="text-[10px] uppercase tracking-[0.15em] text-[#075056]/30 font-bold">{metric.label}</p>
                 <p className="text-2xl text-[#075056]">{metric.value}</p>
                 <div className="flex items-center space-x-2">
-                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                   <div className={`w-1.5 h-1.5 rounded-full ${metric.change.includes('+') ? 'bg-emerald-500' : 'bg-orange-500'}`}></div>
                    <p className="text-[10px] text-[#075056]/60 font-bold uppercase">{metric.change}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Revenue Intelligence Section - NEW */}
+          {/* Smart Validation Layer - NEW */}
           <section className="space-y-6">
             <div className="flex items-center justify-between border-b border-[#E4EEF0] pb-4">
-               <h3 className="text-lg text-[#075056]">Revenue Intelligence</h3>
-               <span className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Live Data Sync</span>
+               <h3 className="text-lg text-[#075056]">System Validation</h3>
+               <span className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Mathematical Integrity</span>
             </div>
+            <ReturnValidator 
+              revenue={vendor.raisedAmount / 12} 
+              promisedReturn={vendor.returnsPromised || 12} 
+              actualReturn={vendor.returnsActual}
+            />
+          </section>
+
+          {/* Revenue Intelligence Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <div className="bg-[#F8FAFC] p-6 rounded-[32px] border border-[#E4EEF0] h-[240px]">
                   <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold mb-4">Revenue Growth Trend</p>
@@ -162,7 +165,7 @@ export function VendorDetail() {
           <section className="space-y-6">
             <h3 className="text-lg text-[#075056] border-b border-[#E4EEF0] pb-4">Verification Documents</h3>
             <div className="space-y-3">
-              {vendor.documents.map((doc) => (
+              {documents.map((doc) => (
                 <div key={doc.name} className="flex items-center justify-between p-5 rounded-[24px] border border-[#E4EEF0] bg-white hover:border-[#075056] transition-all group">
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] flex items-center justify-center text-[#075056]/20 group-hover:text-[#075056] transition-colors">
@@ -190,7 +193,11 @@ export function VendorDetail() {
           <section className="space-y-6">
             <h3 className="text-lg text-[#075056] border-b border-[#E4EEF0] pb-4">Audit History</h3>
             <div className="space-y-8 pl-4 border-l-2 border-[#F1F5F9] ml-2">
-              {vendor.history.map((item, idx) => (
+              {[
+                { event: "Application Submitted", date: "Apr 10, 2026", user: "System" },
+                { event: "Document Review Started", date: "Apr 11, 2026", user: "Alex Rivera" },
+                { event: "Revenue Verified", date: "Apr 12, 2026", user: "Alex Rivera" },
+              ].map((item, idx) => (
                 <div key={idx} className="relative">
                   <div className="absolute -left-[25px] top-1.5 w-3 h-3 rounded-full bg-white border-2 border-[#075056]" />
                   <div className="space-y-1">
@@ -207,11 +214,24 @@ export function VendorDetail() {
         <div className="lg:col-span-4 space-y-8">
           <div className="p-8 rounded-[12px] bg-[#F8FAFC] border border-[#E4EEF0] space-y-8">
             <div className="space-y-4">
-              <h4 className="text-xs uppercase tracking-[0.2em] text-[#075056]/30">Profile Overview</h4>
-              <div className="space-y-4">
+              <h4 className="text-xs uppercase tracking-[0.2em] text-[#075056]/30">Node Intelligence</h4>
+              <div className="p-5 bg-white border border-[#E4EEF0] rounded-[24px] space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] text-[#075056]/40 uppercase font-bold">Investor Participation</p>
+                  <span className="text-sm font-bold text-[#075056]">{vendor.investorParticipation}%</span>
+                </div>
+                <div className="h-1.5 w-full bg-[#F8FAFC] rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500" style={{ width: `${vendor.investorParticipation}%` }}></div>
+                </div>
+                <div className="flex items-center space-x-2 text-[#075056]/60">
+                   <Target size={12} className="text-[#FF5B04]" />
+                   <span className="text-[9px] italic">Targeting {vendor.investorsCount + 10} investors by next cycle.</span>
+                </div>
+              </div>
+              <div className="space-y-4 pt-4">
                 <div className="flex items-center space-x-3 text-sm text-[#075056]">
                   <MapPin size={16} className="text-[#075056]/20" />
-                  <span>{vendor.location}</span>
+                  <span>{vendor.location} (Node {vendor.lat}, {vendor.lng})</span>
                 </div>
                 <div className="flex items-center space-x-3 text-sm text-[#075056]">
                   <Calendar size={16} className="text-[#075056]/20" />
@@ -266,14 +286,19 @@ export function VendorDetail() {
             </div>
 
             <div className="pt-8 border-t border-[#E4EEF0] space-y-4">
-               <h4 className="text-xs uppercase tracking-[0.2em] text-[#075056]/30 font-bold">Upgrade Strategy</h4>
-               <div className="p-5 bg-white border border-[#E4EEF0] rounded-[24px] space-y-3 shadow-sm">
+               <h4 className="text-xs uppercase tracking-[0.2em] text-[#075056]/30 font-bold">Smart Recommendation</h4>
+               <div className={`p-5 border rounded-[24px] space-y-3 shadow-sm ${
+                 vendor.platformRating === 'A' ? 'bg-emerald-50 border-emerald-100' : 'bg-orange-50 border-orange-100'
+               }`}>
                   <div className="flex items-center space-x-2 text-[#075056]">
-                     <TrendingUp size={14} />
-                     <p className="text-[10px] uppercase tracking-widest font-bold">Growth Roadmap</p>
+                     <Zap size={14} className={vendor.platformRating === 'A' ? 'text-emerald-600' : 'text-orange-600'} />
+                     <p className="text-[10px] uppercase tracking-widest font-bold">AI Decision Support</p>
                   </div>
-                  <p className="text-xs text-[#075056] leading-relaxed italic">
-                     "{vendor.upgradeIntent}"
+                  <p className="text-xs text-[#075056] leading-relaxed font-medium">
+                    {vendor.platformRating === 'A' 
+                      ? "Highly recommended for approval. Node shows exceptional liquidity and return consistency."
+                      : "Exercise caution. Node has limited historical data in this specific category."
+                    }
                   </p>
                </div>
             </div>

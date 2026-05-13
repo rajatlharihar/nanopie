@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanopie | High-Fidelity UI Bible</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #075056;
+            --accent: #FF5B04;
+            --contrast: #16232B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --bg-main: #F4F7F9;
+            --bg-card: #FFFFFF;
+            --border: #E2E8F0;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-weight: 300 !important;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.4;
+            padding: 40px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Navigation (Visual) */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 60px;
+        }
+
+        nav {
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        nav ul { list-style: none; }
+        nav li { margin-bottom: 12px; }
+        nav a { text-decoration: none; color: var(--text-muted); font-size: 13px; transition: color 0.2s; }
+        nav a:hover { color: var(--primary); }
+        nav .active { color: var(--primary); font-weight: 400 !important; }
+
+        /* Sections */
+        .doc-section {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 80px;
+            margin-bottom: 60px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 30px;
+        }
+
+        .section-header h2 { font-size: 32px; color: var(--contrast); letter-spacing: -0.02em; }
+        .section-header p { color: var(--text-muted); margin-top: 8px; font-size: 15px; }
+
+        h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 24px; display: block; }
+
+        /* Color Palette - Refined Strip Layout */
+        .color-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-bottom: 60px; }
+        .color-card { display: flex; flex-direction: column; gap: 12px; }
+        .color-swatch-main { height: 160px; border-radius: 12px; padding: 24px; color: white; display: flex; align-items: flex-end; font-size: 13px; }
+        .color-strip { display: grid; grid-template-columns: repeat(5, 1fr); height: 44px; border-radius: 8px; overflow: hidden; }
+        .shade { height: 100%; }
+
+        /* Typography Matrix */
+        .type-row { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-bottom: 40px; align-items: baseline; }
+        .type-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+        .type-preview { color: var(--contrast); }
+
+        /* Icon Grid - MASSIVE */
+        .icon-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 16px; }
+        .icon-box { aspect-ratio: 1; border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+        .icon-box:hover { background: var(--bg-main); border-color: var(--primary); }
+        .icon-box svg { width: 22px; height: 22px; stroke: var(--text-main); stroke-width: 1.5; }
+        .icon-box span { font-size: 8px; text-transform: uppercase; opacity: 0.5; }
+
+        /* Buttons & Controls Matrix */
+        .button-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .btn { padding: 16px 32px; border-radius: 14px; border: 1px solid transparent; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-outline { background: transparent; border-color: var(--border); color: var(--text-main); }
+        .btn-ghost { background: transparent; color: var(--text-muted); }
+        .btn-danger { background: var(--danger); color: white; }
+        
+        .btn-sm { padding: 10px 20px; font-size: 9px; }
+        .btn-lg { padding: 20px 44px; font-size: 13px; }
+
+        /* Analytics & Graphs - DENSE */
+        .graph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .graph-card { background: #16232B; border-radius: 24px; padding: 32px; color: white; }
+        .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 100px; margin-top: 24px; }
+        .bar { flex: 1; border-radius: 4px; background: var(--accent); opacity: 0.4; }
+        .line-chart { height: 100px; border-bottom: 1px solid rgba(255,255,255,0.1); border-left: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .line-svg { width: 100%; height: 100%; }
+
+        /* UI Elements - Spinners, Steppers, etc. */
+        .elements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .stepper { display: flex; gap: 8px; }
+        .step { width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
+        .step.active { background: var(--primary); width: 32px; border-radius: 6px; }
+
+        .badge { padding: 4px 12px; border-radius: 20px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; background: var(--primary); color: white; }
+
+        /* Cards Gallery */
+        .cards-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .u-card { border: 1px solid var(--border); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
+        .u-card-img { height: 120px; background: var(--bg-main); border-radius: 12px; position: relative; overflow: hidden; }
+        .u-card-img::after { content: 'IMAGE_NODE'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; opacity: 0.2; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="page-layout">
+            
+            <nav>
+                <div style="margin-bottom: 40px;">
+                    <svg width="140" height="30" viewBox="0 0 378 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27.6445 6.79065C31.9201 9.25921 35.8926 12.1796 39.502 15.4879C38.78 15.4023 38.059 15.3569 37.3389 15.3512C34.0257 15.3251 31.0229 16.1308 28.3301 17.7662C25.6377 19.353 23.4758 21.5526 21.8457 24.3658C20.216 27.1304 19.387 30.267 19.3594 33.775C19.3322 37.2344 20.1117 40.3837 21.6973 43.2223C23.2829 46.0609 25.4584 48.3202 28.2227 49.9987C30.9381 51.6766 33.9526 52.5283 37.2656 52.5543C40.5301 52.58 43.435 51.8475 45.9805 50.3571C48.526 48.8665 50.5392 46.8842 52.0205 44.4108C53.4533 41.8884 54.1822 39.117 54.2061 36.0963C54.2094 35.6774 54.1999 35.2758 54.1816 34.8922C58.9148 44.2927 61.3945 54.6863 61.3945 65.2467H23.0684V54.6715H0L27.6445 6.79065ZM37.627 25.1481C39.3323 25.1615 40.889 25.5634 42.2959 26.3541C43.6543 27.0957 44.7181 28.1273 45.4873 29.4489C46.2565 30.7705 46.6345 32.2845 46.6211 33.9899C46.608 35.6464 46.2063 37.1542 45.416 38.5123C44.6257 39.8703 43.5451 40.934 42.1748 41.7028C40.8048 42.4228 39.2423 42.7761 37.4883 42.7623C35.6858 42.7481 34.1054 42.3699 32.7471 41.6285C31.389 40.8383 30.3249 39.7821 29.5557 38.4606C28.7381 37.0898 28.3362 35.5516 28.3496 33.8463C28.363 32.141 28.7893 30.6339 29.6279 29.3248C30.4179 28.0154 31.4972 27 32.8672 26.2799C34.2375 25.5111 35.8243 25.1339 37.627 25.1481Z" fill="#FF5B04"/>
+                        <path d="M112.396 55.0917V31.4195C112.396 27.1154 111.163 23.6435 108.695 21.0037C106.227 18.3639 102.928 17.044 98.7957 17.044C95.9837 17.044 93.4874 17.6752 91.3067 18.9377C89.1833 20.1429 87.4904 21.8071 86.2279 23.9304C85.0228 26.0537 84.4202 28.5214 84.4202 31.3334L82.6125 30.3004C82.6125 27.3163 83.3298 24.6478 84.7645 22.2949C86.2566 19.942 88.2365 18.0769 90.7041 16.6996C93.2291 15.3223 96.0698 14.6337 99.2261 14.6337C102.382 14.6337 105.137 15.351 107.49 16.7857C109.9 18.2204 111.765 20.2003 113.085 22.7253C114.405 25.2503 115.065 28.1484 115.065 31.4195V55.0917H112.396ZM81.7517 55.0917V15.4945H84.4202V55.0917H81.7517ZM145.805 55.9525C141.903 55.9525 138.402 55.063 135.303 53.284C132.262 51.4476 129.852 48.9799 128.073 45.881C126.294 42.7821 125.404 39.2815 125.404 35.3792C125.404 31.4768 126.294 27.9762 128.073 24.8773C129.852 21.721 132.262 19.2247 135.303 17.3883C138.345 15.5519 141.788 14.6337 145.633 14.6337C148.675 14.6337 151.4 15.2076 153.811 16.3553C156.278 17.4457 158.316 19.0238 159.922 21.0898C161.587 23.1557 162.734 25.6233 163.366 28.4927V42.0074C162.677 44.8768 161.501 47.3731 159.836 49.4964C158.23 51.5624 156.221 53.1692 153.811 54.3169C151.458 55.4073 148.789 55.9525 145.805 55.9525ZM146.15 53.4561C151.085 53.4561 155.016 51.8206 157.943 48.5495C160.869 45.2211 162.333 40.831 162.333 35.3792C162.333 31.7064 161.644 28.5214 160.267 25.8242C158.947 23.0696 157.053 20.9463 154.585 19.4542C152.118 17.9048 149.248 17.13 145.977 17.13C142.534 17.13 139.464 17.9335 136.767 19.5403C134.127 21.0898 132.032 23.2418 130.483 25.9964C128.933 28.6936 128.159 31.7925 128.159 35.2931C128.159 38.7937 128.933 41.9213 130.483 44.6759C132.032 47.3731 134.156 49.5251 136.853 51.132C139.607 52.6814 142.706 53.4561 146.15 53.4561ZM162.247 55.0917V44.5037L163.021 34.6905L162.247 25.1356V15.4945H164.915V55.0917H162.247ZM209.321 55.0917V31.4195C209.321 27.1154 208.088 23.6435 205.62 21.0037C203.152 18.3639 199.853 17.044 195.721 17.044C192.909 17.044 190.412 17.6752 188.232 18.9377C186.108 20.1429 184.415 21.8071 183.153 23.9304C181.948 26.0537 181.345 28.5214 181.345 31.3334L179.537 30.3004C179.537 27.3163 180.255 24.6478 181.69 22.2949C183.182 19.942 185.161 18.0769 187.629 16.6996C190.154 15.3223 192.995 14.6337 196.151 14.6337C199.307 14.6337 202.062 15.351 204.415 16.7857C206.825 18.2204 208.69 20.2003 210.01 22.7253C211.33 25.2503 211.99 28.1484 211.99 31.4195V55.0917H209.321ZM178.677 55.0917V15.4945H181.345V55.0917H178.677ZM242.73 55.9525C238.885 55.9525 235.413 55.0343 232.314 53.1979C229.273 51.3615 226.834 48.8652 224.998 45.7089C223.219 42.5526 222.329 39.0233 222.329 35.1209C222.329 31.276 223.219 27.8041 224.998 24.7051C226.834 21.6062 228.957 23.2131 227.408 25.9103C225.858 28.6075 225.084 31.6777 225.084 35.1209C225.084 38.6215 225.858 41.7491 227.408 44.5037C228.957 47.2583 231.052 49.439 233.692 51.0459C236.389 52.6527 239.402 53.4561 242.73 53.4561ZM242.73 53.4561C246.059 53.4561 249.043 52.6527 251.683 51.0459C254.322 49.439 256.417 47.2583 257.967 44.5037C259.516 41.6918 260.291 38.5355 260.291 35.0348C260.291 31.649 259.516 28.6075 257.967 25.9103C256.417 23.2131 254.322 21.0898 251.683 19.5403C249.043 17.9335 246.059 17.13 242.73 17.13C239.402 17.13 236.389 17.9335 233.692 19.5403C231.052 21.0898 228.957 23.2131 227.408 25.9103C225.858 28.6075 225.084 31.6777 225.084 35.1209C225.084 38.6215 225.858 41.7491 227.408 44.5037C228.957 47.2583 231.052 49.439 233.692 51.0459C236.389 52.6527 239.402 53.4561 242.73 53.4561ZM293.969 55.9525C290.985 55.9525 288.23 55.3786 285.705 54.2309C283.238 53.0831 281.114 51.4763 279.335 49.4103C277.614 47.287 276.409 44.8194 275.72 42.0074V28.4927C276.409 25.566 277.642 23.0696 279.421 21.0037C281.2 18.9377 283.353 17.3596 285.878 16.2692C288.403 15.1789 291.1 14.6337 293.969 14.6337C297.757 14.6337 301.114 15.5519 304.041 17.3883C307.025 19.1673 309.378 21.6349 311.099 24.7912C312.821 27.8901 313.682 31.4195 313.682 35.3792C313.682 39.2815 312.821 42.7821 311.099 45.881C309.435 48.9799 307.111 51.4476 304.127 53.284C301.143 55.063 297.757 55.9525 293.969 55.9525ZM274.257 71.9635V15.4945H276.925V25.1356L276.064 34.6905L276.925 44.5037V71.9635H274.257ZM293.453 53.4561C296.896 53.4561 299.909 52.6814 302.491 51.132C305.131 49.5825 307.197 47.4305 308.689 44.6759C310.181 41.9213 310.927 38.7937 310.927 35.2931C310.927 31.7351 310.181 28.6075 308.689 25.9103C307.197 23.1557 305.16 21.0037 302.577 19.4542C299.995 17.9048 297.039 17.13 293.711 17.13C290.382 17.13 287.456 17.9048 284.931 19.4542C282.406 21.0037 280.426 23.1557 278.991 25.9103C277.556 28.6075 276.839 31.7638 276.839 35.3792C276.839 38.8798 277.528 42.0074 278.905 44.762C280.34 47.4592 282.291 49.5825 284.759 51.132C287.284 52.6814 290.182 53.4561 293.453 53.4561ZM324.947 55.0917V15.4945H327.615V55.0917H324.947ZM326.238 5.5952C325.492 5.5952 324.861 5.30827 324.344 4.7344C323.828 4.16053 323.57 3.50057 323.57 2.75454C323.57 1.95112 323.828 1.29116 324.344 0.77468C324.861 0.258195 325.492 -4.78447e-05 326.238 -4.78447e-05C327.041 -4.78447e-05 327.701 0.258195 328.218 0.77468C328.792 1.29116 329.079 1.95112 329.079 2.75454C329.079 3.50057 328.792 4.16053 328.218 4.7344C327.701 5.30827 327.041 5.5952 326.238 5.5952ZM359.67 55.9525C355.711 55.9525 352.153 55.063 348.996 53.284C345.897 51.4476 343.43 48.9799 341.593 45.881C339.814 42.7247 338.925 39.1667 338.925 35.207C338.925 31.3047 339.786 27.8041 341.507 24.7051C343.286 21.6062 345.697 19.1673 348.738 17.3883C351.837 15.5519 355.309 14.6337 359.154 14.6337C362.712 14.6337 365.839 15.4371 368.537 17.044C371.291 18.5934 373.443 20.7741 374.993 23.5861C376.542 26.3981 377.317 29.6404 377.317 33.3132C377.317 33.5428 377.288 33.9158 377.231 34.4323C377.231 34.8914 377.173 35.4939 377.059 36.24H340.819V33.7436H375.337L374.562 34.3462C374.792 30.9604 374.275 27.9762 373.013 25.3938C371.75 22.8114 369.914 20.8028 367.504 19.3681C365.151 17.8761 362.339 17.13 359.068 17.13C355.625 17.13 352.583 17.9048 349.943 19.4542C347.361 20.9463 345.324 23.0409 343.831 25.7381C342.397 28.3779 341.679 31.4768 341.679 35.0348C341.679 38.7076 342.425 41.9213 343.918 44.6759C345.467 47.4305 347.619 49.5825 350.374 51.132C353.128 52.6814 356.342 53.4561 360.015 53.4561C362.769 53.4561 365.294 52.9397 367.59 51.9067C369.943 50.8737 371.923 49.3243 373.529 47.2583L375.337 49.066C373.558 51.1893 371.291 52.8823 368.537 54.1448C365.839 55.3499 362.884 55.9525 359.67 55.9525Z" fill="#075056"/>
+                    </svg>
+                </div>
+                <ul>
+                    <li><a href="#colors" class="active">Color Palette</a></li>
+                    <li><a href="#typography">Typography</a></li>
+                    <li><a href="#icons">Iconography</a></li>
+                    <li><a href="#buttons">Buttons & Matrix</a></li>
+                    <li><a href="#elements">UI Elements</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                    <li><a href="#cards">Cards & Layouts</a></li>
+                </ul>
+            </nav>
+
+            <main>
+                
+                <!-- Color Palette -->
+                <div class="doc-section" id="colors">
+                    <div class="section-header">
+                        <h2>Color Architecture</h2>
+                        <p>Our primary identity system and functional status colors.</p>
+                    </div>
+                    
+                    <div class="color-row">
+                        <div class="color-card">
+                            <h4>Primary | Deep Teal</h4>
+                            <div class="color-swatch-main" style="background: #075056;"><span>#075056</span></div>
+                            <div class="color-strip">
+                                <div class="shade" style="background: #02171A;"></div>
+                                <div class="shade" style="background: #042E32;"></div>
+                                <div class="shade" style="background: #075056;"></div>
+                                <div class="shade" style="background: #0A727A;"></div>
+                                <div class="shade" style="background: #0D949E;"></div>
+                            </div>
+                        </div>
+                        <div class="color-card">
+                            <h4>Secondary | Nano Orange</h4>
+                            <div class="color-swatch-main" style="background: #FF5B04;"><span>#FF5B04</span></div>
+                            <div class="color-strip">
+                                <div class="shade" style="background: #662402;"></div>
+                                <div class="shade" style="background: #993702;"></div>
+                                <div class="shade" style="background: #FF5B04;"></div>
+                                <div class="shade" style="background: #FF8546;"></div>
+                                <div class="shade" style="background: #FFB088;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 40px;">Status & Functional</h4>
+                    <div class="alert-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                        <div class="color-card"><div class="color-swatch-main" style="background: #3B82F6; height: 80px;"><span>#3B82F6</span></div></div>
+                        <div class="color-card"><div class="color-swatch-main" style="background: #10B981; height: 80px;"><span>#10B981</span></div></div>
+                        <div class="color-card"><div class="color-swatch-main" style="background: #F59E0B; height: 80px;"><span>#F59E0B</span></div></div>
+                        <div class="color-card"><div class="color-swatch-main" style="background: #EF4444; height: 80px;"><span>#EF4444</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div class="doc-section" id="typography">
+                    <div class="section-header">
+                        <h2>Typography Scaling</h2>
+                        <p>Responsive font sizes transitioning from Mobile App to Laptop Desktop.</p>
+                    </div>
+                    
+                    <style>
+                        .type-table { width: 100%; border-collapse: collapse; }
+                        .type-table th { text-align: left; padding: 16px; font-size: 11px; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); }
+                        .type-table td { padding: 24px 16px; border-bottom: 1px solid var(--border); }
+                        .device-tag { padding: 4px 8px; border-radius: 4px; font-size: 9px; font-weight: 400 !important; }
+                        .mobile-tag { background: #E2E8F0; color: #475569; }
+                        .laptop-tag { background: var(--primary); color: white; }
+                    </style>
+
+                    <table class="type-table">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Mobile (App)</th>
+                                <th>Laptop (Desktop)</th>
+                                <th>Visual Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><h4 style="margin:0;">Hero Header (H1)</h4></td>
+                                <td>24px</td>
+                                <td>48px</td>
+                                <td><span style="font-size: 32px; color: var(--contrast);">Sample Header</span></td>
+                            </tr>
+                            <tr>
+                                <td><h4 style="margin:0;">Section Title (H2)</h4></td>
+                                <td>20px</td>
+                                <td>32px</td>
+                                <td><span style="font-size: 24px; color: var(--contrast);">Operational Node</span></td>
+                            </tr>
+                            <tr>
+                                <td><h4 style="margin:0;">Card Title (H3)</h4></td>
+                                <td>16px</td>
+                                <td>20px</td>
+                                <td><span style="font-size: 18px; color: var(--contrast);">Punjab Dairy Farm</span></td>
+                            </tr>
+                            <tr>
+                                <td><h4 style="margin:0;">Body Text</h4></td>
+                                <td>14px</td>
+                                <td>16px</td>
+                                <td><span style="font-size: 16px; opacity: 0.7;">The foundation of our communication.</span></td>
+                            </tr>
+                            <tr>
+                                <td><h4 style="margin:0;">Metadata / Caption</h4></td>
+                                <td>11px</td>
+                                <td>13px</td>
+                                <td><span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5;">Pending Sync</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 40px; padding: 20px; background: var(--bg-main); border-radius: 12px; font-size: 12px; color: var(--text-muted);">
+                        <strong>Note:</strong> We use a fluid scaling system. For intermediate sizes, font-sizes interpolate between these two extremes using clamp() functions in CSS.
+                    </div>
+                </div>
+
+                <!-- Icons - MASSIVE GRID -->
+                <div class="doc-section" id="icons">
+                    <div class="section-header">
+                        <h2>Iconography</h2>
+                        <p>A comprehensive set of technical line icons.</p>
+                    </div>
+                    <div class="icon-grid">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Time</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg><span>Assets</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Terminal</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Shield</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Activity</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Dark</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span>Edit</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Network</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><span>Vault</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>Global</span></div>
+                        <!-- More Icons -->
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Grid</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Star</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Reports</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>Chat</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>Sync</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Check</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Alert</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Lock</span></div>
+                        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Fund</span></div>
+                    </div>
+                </div>
+
+                <!-- Buttons Matrix -->
+                <div class="doc-section" id="buttons">
+                    <div class="section-header">
+                        <h2>Buttons & Interactions</h2>
+                        <p>Complete variant matrix for all terminal states.</p>
+                    </div>
+                    <div class="button-matrix">
+                        <div class="btn-stack" style="display: flex; flex-direction: column; gap: 20px;">
+                            <h4>Color Variants</h4>
+                            <button class="btn btn-primary">Primary Terminal</button>
+                            <button class="btn btn-accent">Authorize listing</button>
+                            <button class="btn btn-outline">Secondary View</button>
+                            <button class="btn btn-danger">Abort Mission</button>
+                        </div>
+                        <div class="btn-stack" style="display: flex; flex-direction: column; gap: 20px;">
+                            <h4>Size Matrix</h4>
+                            <button class="btn btn-primary btn-lg">Large Action</button>
+                            <button class="btn btn-primary">Default Size</button>
+                            <button class="btn btn-primary btn-sm">Micro State</button>
+                        </div>
+                        <div class="btn-stack" style="display: flex; flex-direction: column; gap: 20px;">
+                            <h4>Interaction Nodes</h4>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <div class="spinner" style="width: 24px; height: 24px;"></div>
+                                <span style="font-size: 11px;">Syncing data...</span>
+                            </div>
+                            <div class="stepper">
+                                <div class="step active"></div>
+                                <div class="step"></div>
+                                <div class="step"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics -->
+                <div class="doc-section" id="analytics">
+                    <div class="section-header">
+                        <h2>Analytics Visualization</h2>
+                        <p>High-density data graphs for stakeholder transparency.</p>
+                    </div>
+                    <div class="graph-grid">
+                        <div class="graph-card">
+                            <h4 style="color: rgba(255,255,255,0.4);">Revenue Intelligence</h4>
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 30%;"></div>
+                                <div class="bar" style="height: 50%;"></div>
+                                <div class="bar" style="height: 80%; opacity: 1;"></div>
+                                <div class="bar" style="height: 40%;"></div>
+                                <div class="bar" style="height: 90%;"></div>
+                                <div class="bar" style="height: 60%;"></div>
+                                <div class="bar" style="height: 70%;"></div>
+                            </div>
+                        </div>
+                        <div class="graph-card">
+                            <h4 style="color: rgba(255,255,255,0.4);">System Velocity</h4>
+                            <div class="line-chart">
+                                <svg class="line-svg" viewBox="0 0 200 60">
+                                    <path d="M0 50 Q 25 10, 50 40 T 100 20 T 150 45 T 200 10" fill="none" stroke="#FF5B04" stroke-width="2"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards & Layouts -->
+                <div class="doc-section" id="cards">
+                    <div class="section-header">
+                        <h2>Component Architecture</h2>
+                        <p>Densely packed card layouts for operational data.</p>
+                    </div>
+                    <div class="cards-gallery">
+                        <div class="u-card">
+                            <div class="u-card-img"></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3 style="font-size: 16px;">Vendor Node</h3>
+                                <div class="badge">Active</div>
+                            </div>
+                            <p style="font-size: 13px; opacity: 0.6;">Punjab Dairy Farm regional expansion and automation.</p>
+                            <button class="btn btn-primary btn-sm" style="width: 100%;">Inspect Node</button>
+                        </div>
+                        <div class="u-card" style="background: var(--contrast); color: white;">
+                            <h3 style="font-size: 16px;">Network Status</h3>
+                            <div style="margin: 20px 0;">
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 8px;">
+                                    <span>Integrity</span>
+                                    <span>98.4%</span>
+                                </div>
+                                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;">
+                                    <div style="width: 94%; height: 100%; background: var(--success);"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-accent btn-sm">Emergency Abort</button>
+                        </div>
+                        <div class="u-card">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="icon-box" style="width: 44px; height: 44px; background: var(--bg-main);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8l4 4-4 4M8 12h8"/></svg></div>
+                                <div>
+                                    <h4 style="margin: 0;">Fund Request</h4>
+                                    <p style="font-size: 11px; opacity: 0.5;">$45,000 Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <footer style="padding: 80px; text-align: center; background: var(--contrast); color: rgba(255,255,255,0.4); margin-top: 100px;">
+        <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;">Nanopie Intelligence Dashboard | Component Manual 2026</p>
+    </footer>
+
+</body>
+</html>

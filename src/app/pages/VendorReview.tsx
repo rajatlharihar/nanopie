@@ -17,9 +17,16 @@ import {
   Calculator,
   Sparkles,
   Zap,
-  Briefcase
+  Briefcase,
+  MessageSquare,
+  ShieldAlert,
+  Award,
+  Rocket
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useStakeholder } from "../context";
+import { CreditInsight } from "../components/CreditInsight";
+import { ReturnValidator } from "../components/ReturnValidator";
 
 export function VendorReview() {
   const { id } = useParams();
@@ -71,15 +78,61 @@ export function VendorReview() {
           <ArrowLeft size={14} />
           <span>Back to Verification Queue</span>
         </button>
-        <div className="flex items-center space-x-2 bg-[#FF5B04]/10 text-[#FF5B04] px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#FF5B04]/20">
-          <AlertCircle size={12} />
-          <span>High Impact Case</span>
-        </div>
+        <div className="flex items-center space-x-6">
+            <CreditInsight score={vendor.cibilScore} rating={vendor.platformRating} />
+            <div className="flex items-center space-x-3">
+              <button 
+                onClick={() => navigate(-1)}
+                className="px-6 py-2.5 rounded-[12px] border border-[#E4EEF0] text-xs font-bold uppercase tracking-widest text-[#075056] hover:bg-[#F8FAFC] transition-colors"
+              >
+                Defer
+              </button>
+              <button 
+                onClick={() => navigate('/success')}
+                className="px-8 py-2.5 rounded-[12px] bg-[#FF5B04] text-white text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-[#FF5B04]/20"
+              >
+                Execute Approval
+              </button>
+            </div>
+          </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-8">
-        {/* Left: Vendor Dossier */}
-        <div className="col-span-12 lg:col-span-4 space-y-8">
+      <div className="grid grid-cols-12 gap-12">
+        {/* Left Column: Context & Intelligence */}
+        <div className="col-span-12 lg:col-span-8 space-y-12">
+          
+          {/* AI DECISION SUPPORT PANEL - NEW */}
+          <div className={`p-8 rounded-[40px] border-2 space-y-6 relative overflow-hidden ${
+            vendor.suggestedAction.includes('Recommend') ? 'bg-emerald-50 border-emerald-100' : 'bg-orange-50 border-orange-100'
+          }`}>
+             <div className="relative z-10 space-y-4">
+                <div className="flex items-center space-x-3">
+                   <div className={`p-2 rounded-xl ${vendor.suggestedAction.includes('Recommend') ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
+                      <BrainCircuit size={20} />
+                   </div>
+                   <div>
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-[#075056]/40">Neural Decision Model v4.2</p>
+                      <h3 className="text-lg font-medium text-[#075056]">AI Recommendation: <span className={vendor.suggestedAction.includes('Recommend') ? 'text-emerald-700' : 'text-orange-700'}>{vendor.suggestedAction}</span></h3>
+                   </div>
+                </div>
+                <p className="text-sm text-[#075056] leading-relaxed italic">
+                   "{vendor.suggestionReason}"
+                </p>
+                <div className="flex flex-wrap gap-3 pt-2">
+                   {vendor.signals?.map((sig, i) => (
+                     <div key={i} className="flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/40">
+                        <div className={`w-1.5 h-1.5 rounded-full ${sig.status === 'Stable' || sig.status === 'Normal' ? 'bg-emerald-500' : 'bg-orange-500'}`}></div>
+                        <span className="text-[9px] font-bold text-[#075056] uppercase tracking-widest">{sig.label}: {sig.status}</span>
+                     </div>
+                   ))}
+                </div>
+             </div>
+             {/* Decorative Background Icon */}
+             <div className={`absolute top-0 right-0 p-8 opacity-5 -mr-8 -mt-8 ${vendor.suggestedAction.includes('Recommend') ? 'text-emerald-900' : 'text-orange-900'}`}>
+                {vendor.suggestedAction.includes('Recommend') ? <ShieldCheck size={120} /> : <AlertTriangle size={120} />}
+             </div>
+          </div>
+          
           <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-8">
              <div className="flex flex-col items-center text-center space-y-4">
                 <div className="w-24 h-24 rounded-full bg-[#075056] text-white flex items-center justify-center text-3xl font-light">
