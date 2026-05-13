@@ -21,7 +21,9 @@ import {
   MessageSquare,
   ShieldAlert,
   Award,
-  Rocket
+  Rocket,
+  BrainCircuit,
+  AlertTriangle
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useStakeholder } from "../context";
@@ -31,10 +33,13 @@ import { ReturnValidator } from "../components/ReturnValidator";
 export function VendorReview() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { queue } = useStakeholder();
   const [decision, setDecision] = useState<string | null>(null);
   const [showSimulator, setShowSimulator] = useState(false);
   const [simulating, setSimulating] = useState(false);
   const [profitScore, setProfitScore] = useState<number | null>(null);
+
+  const vendor = queue.find(v => v.id === id) || queue[0];
 
   const caseData = {
     id: id || "V-1234",
