@@ -44,313 +44,293 @@ export function VendorReview() {
   const caseData = {
     id: id || "V-1234",
     vendorName: "Banaras Handlooms",
-    category: "Handicrafts & Textile",
-    location: "Varanasi, UP, India",
-    requestAmount: "₹12,50,000",
-    kycStatus: "Partially Verified",
-    trustSignal: "Limited Data",
-    description: "Traditional weaving workshop looking for scale-up capital to modernize handloom equipment for export orders.",
-    riskFlags: [
-      "New Entity (Surfaced 3 months ago)",
-      "Unpredictable Regional Logistics (UP East)",
-      "High Seasonality dependence"
-    ]
+    category: "Handicrafts & Textiles",
+    requestAmount: "₹25,00,000",
+    purpose: "Raw Material Inventory Surge",
+    term: "18 Months",
+    expectedReturn: "14.5% APR",
+    status: "Priority Review",
+    score: 84
   };
 
-  const handleSimulate = () => {
+  const [activeTab, setActiveTab] = useState("Context");
+
+  const runSimulation = () => {
     setSimulating(true);
     setTimeout(() => {
-      setProfitScore(87);
+      setProfitScore(92);
       setSimulating(false);
     }, 2000);
   };
 
-  const handleDecision = (type: string) => {
-    setDecision(type);
-    setTimeout(() => {
-      navigate('/vendors');
-    }, 2000);
-  };
-
   return (
-    <div className="max-w-7xl mx-auto space-y-10 pb-32 px-4 md:px-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <button 
-          onClick={() => navigate('/vendors')}
-          className="flex items-center space-x-2 text-xs text-[#075056]/40 hover:text-[#075056] transition-colors"
-        >
-          <ArrowLeft size={14} />
-          <span>Back to Verification Queue</span>
-        </button>
+    <div className="max-w-7xl mx-auto pb-32 px-4 md:px-8 lg:px-12 space-y-10">
+      {/* Top Navigation & Status */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center space-x-6">
-            <CreditInsight score={vendor.cibilScore} rating={vendor.platformRating} />
+          <button 
+            onClick={() => navigate(-1)}
+            className="w-12 h-12 rounded-2xl bg-white border border-[#E4EEF0] flex items-center justify-center text-[#075056] hover:bg-[#075056] hover:text-white transition-all shadow-sm"
+          >
+            <ArrowLeft size={20} />
+          </button>
+          <div className="space-y-1">
             <div className="flex items-center space-x-3">
-              <button 
-                onClick={() => navigate(-1)}
-                className="px-6 py-2.5 rounded-[12px] border border-[#E4EEF0] text-xs font-bold uppercase tracking-widest text-[#075056] hover:bg-[#F8FAFC] transition-colors"
-              >
-                Defer
-              </button>
-              <button 
-                onClick={() => navigate('/success')}
-                className="px-8 py-2.5 rounded-[12px] bg-[#FF5B04] text-white text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-opacity shadow-lg shadow-[#FF5B04]/20"
-              >
-                Execute Approval
-              </button>
+              <h1 className="text-2xl md:text-3xl text-[#075056] font-light">Deep Audit: <span className="font-bold">{vendor.vendorName}</span></h1>
+              <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-blue-100">
+                {vendor.type}
+              </span>
             </div>
-          </div>
-      </div>
-
-      <div className="grid grid-cols-12 gap-12">
-        {/* Left Column: Context & Intelligence */}
-        <div className="col-span-12 lg:col-span-8 space-y-12">
-          
-          {/* AI DECISION SUPPORT PANEL - NEW */}
-          <div className={`p-8 rounded-[40px] border-2 space-y-6 relative overflow-hidden ${
-            vendor.suggestedAction.includes('Recommend') ? 'bg-emerald-50 border-emerald-100' : 'bg-orange-50 border-orange-100'
-          }`}>
-             <div className="relative z-10 space-y-4">
-                <div className="flex items-center space-x-3">
-                   <div className={`p-2 rounded-xl ${vendor.suggestedAction.includes('Recommend') ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
-                      <BrainCircuit size={20} />
-                   </div>
-                   <div>
-                      <p className="text-[10px] uppercase tracking-widest font-bold text-[#075056]/40">Neural Decision Model v4.2</p>
-                      <h3 className="text-lg font-medium text-[#075056]">AI Recommendation: <span className={vendor.suggestedAction.includes('Recommend') ? 'text-emerald-700' : 'text-orange-700'}>{vendor.suggestedAction}</span></h3>
-                   </div>
-                </div>
-                <p className="text-sm text-[#075056] leading-relaxed italic">
-                   "{vendor.suggestionReason}"
-                </p>
-                <div className="flex flex-wrap gap-3 pt-2">
-                   {vendor.signals?.map((sig, i) => (
-                     <div key={i} className="flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/40">
-                        <div className={`w-1.5 h-1.5 rounded-full ${sig.status === 'Stable' || sig.status === 'Normal' ? 'bg-emerald-500' : 'bg-orange-500'}`}></div>
-                        <span className="text-[9px] font-bold text-[#075056] uppercase tracking-widest">{sig.label}: {sig.status}</span>
-                     </div>
-                   ))}
-                </div>
-             </div>
-             {/* Decorative Background Icon */}
-             <div className={`absolute top-0 right-0 p-8 opacity-5 -mr-8 -mt-8 ${vendor.suggestedAction.includes('Recommend') ? 'text-emerald-900' : 'text-orange-900'}`}>
-                {vendor.suggestedAction.includes('Recommend') ? <ShieldCheck size={120} /> : <AlertTriangle size={120} />}
-             </div>
-          </div>
-          
-          <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-8">
-             <div className="flex flex-col items-center text-center space-y-4">
-                <div className="w-24 h-24 rounded-full bg-[#075056] text-white flex items-center justify-center text-3xl font-light">
-                  BH
-                </div>
-                <div>
-                  <h2 className="text-2xl text-[#075056]">{caseData.vendorName}</h2>
-                  <p className="text-xs text-[#075056]/40">{caseData.category}</p>
-                </div>
-             </div>
-
-             <div className="space-y-4 pt-6 border-t border-[#F1F5F9]">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-[#075056]/40">
-                    <MapPin size={14} />
-                    <span className="text-xs">Location</span>
-                  </div>
-                  <span className="text-xs text-[#075056]">{caseData.location}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-[#075056]/40">
-                    <Briefcase size={14} />
-                    <span className="text-xs">Funding Goal</span>
-                  </div>
-                  <span className="text-xs text-[#075056] font-bold">{caseData.requestAmount}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-[#075056]/40">
-                    <ShieldCheck size={14} />
-                    <span className="text-xs">KYC Status</span>
-                  </div>
-                  <span className="text-[10px] px-2 py-0.5 bg-[#FF5B04]/10 text-[#FF5B04] rounded-full border border-[#FF5B04]/20 font-bold uppercase">
-                    {caseData.kycStatus}
-                  </span>
-                </div>
-             </div>
-          </div>
-
-          <div className="bg-[#075056] rounded-[40px] p-8 text-white space-y-6">
-             <h3 className="text-xs font-bold uppercase tracking-widest text-white/30">Risk Classification</h3>
-             <ul className="space-y-4">
-               {caseData.riskFlags.map((flag, i) => (
-                 <li key={i} className="flex items-start space-x-3 text-xs text-white/60">
-                   <AlertCircle size={14} className="text-[#FF5B04] shrink-0 mt-0.5" />
-                   <span>{flag}</span>
-                 </li>
-               ))}
-             </ul>
-          </div>
-
-          <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-8 relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-6 opacity-5">
-                <BrainCircuit size={80} className="text-[#075056]" />
-             </div>
-             
-             <div className="space-y-2 relative z-10">
-                <div className="flex items-center space-x-2 text-[#16232B]">
-                   <Sparkles size={16} />
-                   <h3 className="text-xs font-bold uppercase tracking-widest">AI Strategic Insight</h3>
-                </div>
-                <p className="text-sm text-[#075056] font-medium">Regional Viability: High Heritage Hub</p>
-             </div>
-
-             <div className="space-y-6 relative z-10">
-                <div className="space-y-2">
-                   <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Location Analysis</p>
-                   <p className="text-xs text-[#075056]/70 leading-relaxed">Varanasi represents a critical cultural node. While logistics are complex, the artisan density provides a unique supply moat.</p>
-                </div>
-                
-                <div className="space-y-2">
-                   <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Business Model</p>
-                   <p className="text-xs text-[#075056]/70 leading-relaxed">Direct-to-Consumer export potential is massive. Transition from local middlemen to Nanopie-verified global fulfillment.</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#F1F5F9]">
-                   <div className="space-y-3">
-                      <p className="text-[9px] uppercase tracking-widest text-[#16232B] font-bold">Strategic Pros</p>
-                      <ul className="space-y-2">
-                         <li className="flex items-center space-x-2 text-[10px] text-[#075056]/60">
-                            <div className="w-1 h-1 rounded-full bg-[#16232B]"></div>
-                            <span>Heritage Supply</span>
-                         </li>
-                         <li className="flex items-center space-x-2 text-[10px] text-[#075056]/60">
-                            <div className="w-1 h-1 rounded-full bg-[#16232B]"></div>
-                            <span>High Margin potential</span>
-                         </li>
-                      </ul>
-                   </div>
-                   <div className="space-y-3">
-                      <p className="text-[9px] uppercase tracking-widest text-[#FF5B04] font-bold">Security Cons</p>
-                      <ul className="space-y-2">
-                         <li className="flex items-center space-x-2 text-[10px] text-[#075056]/60">
-                            <div className="w-1 h-1 rounded-full bg-[#FF5B04]"></div>
-                            <span>Seasonal volatility</span>
-                         </li>
-                         <li className="flex items-center space-x-2 text-[10px] text-[#075056]/60">
-                            <div className="w-1 h-1 rounded-full bg-[#FF5B04]"></div>
-                            <span>Logistics blindspots</span>
-                         </li>
-                      </ul>
-                   </div>
-                </div>
-             </div>
+            <p className="text-sm text-[#075056]/40">Case assigned to Senior Underwriter Terminal • {caseData.id}</p>
           </div>
         </div>
 
-        {/* Right: Decision Terminal - FLOW 2 */}
+        <div className="flex items-center space-x-4 bg-white/40 backdrop-blur-md p-2 rounded-[24px] border border-[#E4EEF0]">
+          {["Context", "Risk", "AI Insights", "Simulation"].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-[#075056] text-white shadow-lg shadow-[#075056]/20' : 'text-[#075056]/40 hover:text-[#075056]'}`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-12 gap-8">
+        {/* Left Column: Data & Insights */}
         <div className="col-span-12 lg:col-span-8 space-y-8">
-           <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 md:p-12 space-y-10">
-              <div className="flex flex-col md:flex-row justify-between gap-6">
-                <div className="space-y-4 max-w-lg">
-                  <h3 className="text-2xl text-[#075056] font-light leading-snug">
-                    Indian Market <span className="text-[#FF5B04]">Profitability Simulation</span> Required
-                  </h3>
-                  <p className="text-sm text-[#075056]/60 leading-relaxed">
-                    India's retail landscape is highly unpredictable. Before approving this ₹12.5L request, run the profitability simulator to assess regional validity and seasonal risk.
+          
+          {/* AI DECISION SUPPORT SYSTEM */}
+          <div className="bg-[#075056] rounded-[40px] p-8 md:p-10 text-white overflow-hidden relative group">
+            <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform">
+              <BrainCircuit size={160} />
+            </div>
+            
+            <div className="relative z-10 space-y-10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-[#FF5B04]">
+                    <Sparkles size={24} className="animate-pulse" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold">Neural Verification Model v4.2</p>
+                    <h3 className="text-xl font-light">AI Intelligence Recommendation</h3>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] uppercase tracking-widest text-white/40 font-bold mb-1">Confidence Score</p>
+                  <p className="text-3xl font-medium text-[#FF5B04]">94.8%</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-white/5 backdrop-blur-md rounded-[32px] p-6 border border-white/10 space-y-4">
+                  <div className="flex items-center space-x-3 text-[#FF5B04]">
+                    <CheckCircle2 size={18} />
+                    <h4 className="text-sm font-bold uppercase tracking-widest">Suggested: {vendor.suggestedAction}</h4>
+                  </div>
+                  <p className="text-sm text-white/70 leading-relaxed">
+                    {vendor.suggestionReason || "The system recommends approval based on high revenue velocity and stable market node distribution."}
                   </p>
                 </div>
-                
-                <div className="flex flex-col items-center justify-center p-8 bg-[#F8FAFC] border border-[#E4EEF0] rounded-[32px] w-full md:w-64 min-h-[160px]">
-                  {profitScore ? (
-                    <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center space-y-2">
-                       <p className="text-[10px] uppercase tracking-widest text-[#075056]/40">Nanopie Score</p>
-                       <p className={`text-5xl ${profitScore > 85 ? 'text-[#16232B]' : 'text-[#FF5B04]'}`}>{profitScore}%</p>
-                       <p className="text-[10px] text-[#16232B] font-bold">READY FOR SCALE</p>
-                    </motion.div>
-                  ) : (
-                    <div className="text-center space-y-4">
-                      <div className={`w-12 h-12 rounded-full border-2 border-dashed border-[#E4EEF0] flex items-center justify-center mx-auto ${simulating ? 'animate-spin border-[#FF5B04]' : 'text-[#075056]/20'}`}>
-                         <Calculator size={20} />
+
+                <div className="bg-white/5 backdrop-blur-md rounded-[32px] p-6 border border-white/10 space-y-4">
+                  <div className="flex items-center space-x-3 text-emerald-400">
+                    <TrendingUp size={18} />
+                    <h4 className="text-sm font-bold uppercase tracking-widest">Growth Signal</h4>
+                  </div>
+                  <div className="space-y-3">
+                    {vendor.signals?.map((sig, i) => (
+                      <div key={i} className="flex items-center justify-between bg-white/5 px-4 py-2 rounded-xl">
+                        <span className="text-[10px] text-white/40 uppercase tracking-widest font-bold">{sig.label}</span>
+                        <span className="text-[10px] text-white font-bold">{sig.status}</span>
                       </div>
-                      <p className="text-xs text-[#075056]/40">{simulating ? "Analyzing Regional Data..." : "Simulation Pending"}</p>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-8 border-t border-[#F8FAFC] flex flex-col md:flex-row gap-6">
+              <div className="flex flex-wrap gap-3">
+                {vendor.trustIndicators?.map((ind, i) => (
+                  <div key={i} className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
+                    ind.active ? 'bg-white text-[#075056]' : 'bg-white/5 text-white/20 border border-white/5'
+                  }`}>
+                    {ind.active ? <ShieldCheck size={12} /> : <AlertCircle size={12} />}
+                    <span>{ind.type}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* FINANCIAL VALIDATION & RISK AUDIT */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-6">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <TrendingUp size={16} />
+                </div>
+                <h3 className="text-sm font-bold text-[#075056] uppercase tracking-widest">Revenue Velocity</h3>
+              </div>
+              <ReturnValidator />
+            </div>
+
+            <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-6">
+              <div className="flex items-center space-x-3 text-orange-600">
+                <ShieldAlert size={16} />
+                <h3 className="text-sm font-bold text-[#075056] uppercase tracking-widest">Credit Insight</h3>
+              </div>
+              <CreditInsight score={vendor.cibilScore} rating={vendor.platformRating} />
+            </div>
+          </div>
+
+          {/* DATA TABLES / CONTEXT */}
+          <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-8">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg text-[#075056]">Transaction Context</h3>
+              <button className="text-[10px] text-[#075056]/40 uppercase tracking-widest font-bold hover:text-[#075056]">View Raw Ledger</button>
+            </div>
+            <div className="space-y-4">
+              {[
+                { date: '12 Apr 2026', type: 'Node Collection', amount: '+ ₹1,42,000', status: 'Secured' },
+                { date: '10 Apr 2026', type: 'Investor Payout', amount: '- ₹85,000', status: 'Processing' },
+                { date: '08 Apr 2026', type: 'Node Collection', amount: '+ ₹2,10,000', status: 'Secured' },
+              ].map((tx, i) => (
+                <div key={i} className="flex items-center justify-between p-5 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:scale-[1.01] transition-transform">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-[#E4EEF0] flex items-center justify-center text-[#075056]/20">
+                      <DollarSign size={16} />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-[#075056]">{tx.type}</p>
+                      <p className="text-[10px] text-[#075056]/40">{tx.date}</p>
+                    </div>
+                  </div>
+                  <div className="text-right space-y-1">
+                    <p className={`text-sm font-bold ${tx.amount.startsWith('+') ? 'text-emerald-600' : 'text-[#075056]'}`}>{tx.amount}</p>
+                    <p className="text-[9px] text-[#075056]/30 uppercase tracking-widest font-bold">{tx.status}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Decisions & History */}
+        <div className="col-span-12 lg:col-span-4 space-y-8">
+          
+          {/* SIMULATOR COMPONENT */}
+          <div className="bg-white border-2 border-[#075056] rounded-[40px] p-8 space-y-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-5">
+              <Calculator size={80} />
+            </div>
+            <div className="space-y-1 relative z-10">
+              <p className="text-[9px] uppercase tracking-widest text-[#075056]/40 font-bold">Smart Analysis</p>
+              <h3 className="text-lg text-[#075056]">Profitability Simulator</h3>
+            </div>
+
+            {simulating ? (
+              <div className="h-48 flex flex-col items-center justify-center space-y-4">
+                <div className="w-12 h-12 border-4 border-[#075056]/10 border-t-[#FF5B04] rounded-full animate-spin"></div>
+                <p className="text-[10px] text-[#075056]/40 uppercase tracking-[0.2em] font-bold">Calculating Scenarios...</p>
+              </div>
+            ) : profitScore ? (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-48 flex flex-col items-center justify-center space-y-2">
+                <p className="text-5xl font-light text-[#075056]">{profitScore}%</p>
+                <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Projected Stability</p>
+                <button onClick={() => setProfitScore(null)} className="text-[10px] text-[#075056]/30 underline mt-4">Reset Simulation</button>
+              </motion.div>
+            ) : (
+              <div className="space-y-6">
+                <p className="text-xs text-[#075056]/60 leading-relaxed">
+                  Analyze how this funding request will affect your pool liquidity over 12 months.
+                </p>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-[10px] font-bold text-[#075056]">
+                      <span>INTEREST RATE</span>
+                      <span>{caseData.expectedReturn}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#F8FAFC] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#075056] w-3/4"></div>
+                    </div>
+                  </div>
+                </div>
                 <button 
-                  onClick={handleSimulate}
-                  disabled={simulating || profitScore !== null}
-                  className="flex-1 py-5 bg-[#075056] text-white rounded-3xl text-xs font-bold uppercase tracking-widest flex items-center justify-center space-x-3 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:scale-100"
+                  onClick={runSimulation}
+                  className="w-full py-4 bg-[#075056] text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all shadow-xl shadow-[#075056]/10"
                 >
-                  <Sparkles size={16} />
-                  <span>{simulating ? "Processing Market Data" : "Run Profitability Simulator"}</span>
-                </button>
-                <button className="flex-1 py-5 border border-[#E4EEF0] text-[#075056]/40 rounded-3xl text-xs font-bold uppercase tracking-widest hover:border-[#075056] hover:text-[#075056] transition-all">
-                  View Data Sources
+                  Run AI Simulation
                 </button>
               </div>
-              <div className="pt-6 border-t border-[#F1F5F9] space-y-3">
-                 <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Upgrade Strategy</p>
-                 <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0]">
-                    <p className="text-xs text-[#075056] font-medium leading-relaxed italic">
-                       "Modernizing core production tools and expanding regional footprint to meet 2024 demand."
-                    </p>
-                 </div>
-              </div>
-           </div>
+            )}
+          </div>
 
-           {/* Final Action Bar */}
-           <AnimatePresence>
-             {profitScore && (
-               <motion.div 
-                 initial={{ opacity: 0, y: 50 }} 
-                 animate={{ opacity: 1, y: 0 }} 
-                 className="bg-[#16232B] rounded-[40px] p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden"
-               >
-                 <div className="absolute top-0 right-0 p-12 opacity-5">
-                    <CheckCircle2 size={120} />
-                 </div>
-                 
-                 <div className="space-y-2 relative z-10 text-center md:text-left">
-                    <h4 className="text-2xl font-light">Simulation Successful</h4>
-                    <p className="text-sm text-white/60">Banaras Handlooms meets the 85% profitability threshold for the Varanasi region.</p>
-                 </div>
+          {/* FINAL DECISION PANEL */}
+          <div className="bg-white border border-[#E4EEF0] rounded-[40px] p-8 space-y-8">
+            <h3 className="text-sm font-bold text-[#075056] uppercase tracking-widest">Final Intervention</h3>
+            <div className="space-y-4">
+              <button 
+                onClick={() => setDecision('Approve')}
+                className={`w-full py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center space-x-3 ${
+                  decision === 'Approve' ? 'bg-emerald-600 text-white' : 'bg-white border border-[#E4EEF0] text-emerald-600 hover:bg-emerald-50'
+                }`}
+              >
+                <CheckCircle2 size={16} />
+                <span>Authorize Funding</span>
+              </button>
+              <button 
+                onClick={() => setDecision('Flag')}
+                className={`w-full py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center space-x-3 ${
+                  decision === 'Flag' ? 'bg-orange-600 text-white' : 'bg-white border border-[#E4EEF0] text-orange-600 hover:bg-orange-50'
+                }`}
+              >
+                <AlertTriangle size={16} />
+                <span>Flag for Committee</span>
+              </button>
+              <button 
+                onClick={() => setDecision('Reject')}
+                className={`w-full py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center space-x-3 ${
+                  decision === 'Reject' ? 'bg-[#16232B] text-white' : 'bg-white border border-[#E4EEF0] text-[#16232B] hover:bg-[#16232B] hover:text-white'
+                }`}
+              >
+                <XCircle size={16} />
+                <span>Reject Protocol</span>
+              </button>
+            </div>
+            {decision && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-[#F1F5F9]">
+                <p className="text-[10px] text-[#075056]/40 italic mb-4">Decision logged to blockchain surveillance node.</p>
+                <button onClick={() => navigate('/admin')} className="w-full py-3 bg-[#FF5B04] text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-[#FF5B04]/20">Submit Decision</button>
+              </motion.div>
+            )}
+          </div>
 
-                 <div className="flex gap-4 relative z-10 w-full md:w-auto">
-                    <button 
-                      onClick={() => handleDecision('reject')}
-                      className="flex-1 md:flex-none px-8 py-4 border border-white/20 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all"
-                    >
-                      Reject Request
-                    </button>
-                    <button 
-                      onClick={() => handleDecision('approve')}
-                      className="flex-1 md:flex-none px-8 py-4 bg-[#075056] text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all"
-                    >
-                      Approve & Authorize
-                    </button>
-                 </div>
-               </motion.div>
-             )}
-           </AnimatePresence>
+          {/* ENTITY HISTORY */}
+          <div className="bg-[#F8FAFC] rounded-[40px] p-8 space-y-6 border border-[#E4EEF0]">
+            <h3 className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Entity History</h3>
+            <div className="space-y-6">
+              {[
+                { event: 'KYC Renewed', date: 'Jan 2026', icon: ShieldCheck },
+                { event: 'Previous Funding', date: 'Sep 2024', icon: Briefcase },
+                { event: 'Onboarding', date: 'Feb 2024', icon: Activity },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center space-x-4">
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#075056]/20">
+                    <item.icon size={14} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-[#075056]">{item.event}</p>
+                    <p className="text-[10px] text-[#075056]/30">{item.date}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Decision Feedback */}
-      <AnimatePresence>
-        {decision && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            className="fixed inset-0 bg-[#075056] flex flex-col items-center justify-center z-[200] text-white space-y-6"
-          >
-            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }}>
-              {decision === 'approve' ? <CheckCircle2 size={80} className="text-[#16232B]" /> : <XCircle size={80} className="text-[#FF5B04]" />}
-            </motion.div>
-            <h2 className="text-3xl font-light">{decision === 'approve' ? 'Vendor Authorized' : 'Request Denied'}</h2>
-            <p className="text-white/40">Redirecting to verification queue...</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
