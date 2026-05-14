@@ -33,14 +33,14 @@ export function ReturnValidator({ revenue, promisedReturn, actualReturn }: Retur
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
-          <div className="space-y-2">
-            <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Revenue/Year</p>
-            <p className="text-xl text-[#075056] font-light">₹{annualRevenue.toLocaleString()}</p>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Revenue/Year</p>
+            <p className="text-lg md:text-xl text-[#075056] font-light">₹{annualRevenue.toLocaleString()}</p>
           </div>
-          <div className="space-y-2 text-right">
-            <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Promised ROI</p>
-            <p className="text-xl text-[#075056] font-medium">{promisedReturn}%</p>
+          <div className="space-y-1 text-right">
+            <p className="text-[9px] md:text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Promised ROI</p>
+            <p className="text-lg md:text-xl text-[#075056] font-medium">{promisedReturn}%</p>
           </div>
         </div>
 

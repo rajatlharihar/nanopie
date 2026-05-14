@@ -44,7 +44,7 @@ export function CreditInsight({ score, rating, variant = 'full' }: CreditInsight
 
   return (
     <Tooltip.Provider delayDuration={200}>
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-wrap items-center gap-3">
         {/* Platform Rating */}
         <Tooltip.Root>
           <Tooltip.Trigger asChild>
