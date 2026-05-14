@@ -73,7 +73,6 @@ export function Intelligence() {
   ];
 
   return (
-  return (
     <div className="max-w-7xl mx-auto space-y-8 md:space-y-12 pb-32 px-0 md:px-4 lg:px-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4 md:px-0">

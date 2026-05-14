@@ -46,7 +46,6 @@ export function VendorDetail() {
   const vendor = MOCK_VENDORS.find(v => v.id === id) || MOCK_VENDORS[0];
 
   return (
-  return (
     <div className="max-w-7xl mx-auto pb-32 px-0 md:px-4 lg:px-12 space-y-8 md:space-y-12">
       {/* Header & Quick Stats */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 px-4 md:px-0">
