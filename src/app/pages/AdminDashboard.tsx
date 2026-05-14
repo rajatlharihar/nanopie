@@ -69,7 +69,6 @@ export function AdminDashboard() {
   };
 
   return (
-  return (
     <div className="max-w-7xl mx-auto space-y-8 md:space-y-12 pb-32 px-0 md:px-4 lg:px-12">
       {/* High Alert Intervention Notification */}
       <motion.div 
