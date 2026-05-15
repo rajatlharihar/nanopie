@@ -32,9 +32,9 @@ export function ResolutionTerminal() {
   const [isResolved, setIsResolved] = useState(false);
   const [activeTab, setActiveTab] = useState<'Chat' | 'Protocols'>('Chat');
   const [messages, setMessages] = useState([
-    { role: 'system', content: `SECURE_INVESTOR_LINE: [${id || 'V-9901'}]`, timestamp: 'System' },
-    { role: 'warning', content: "CRITICAL: Regional liquidity node 'SURAT_NE' is reporting 0.00 balance. Investor bridge is currently locked.", timestamp: 'System' },
-    { role: 'bot', content: "Protocol initiated. We need to verify the 'Money at Hand' status. Please authorize the regional scan to proceed with investor requirements.", timestamp: '2:30 PM' }
+    { role: 'system', content: `SECURE_AUDIT_LINE: [${id || 'V-GLOBAL'}]`, timestamp: 'System' },
+    { role: 'warning', content: `CRITICAL_ALERT: Intelligence node '${id || 'V-NODE'}' reporting non-standard transaction patterns. Bridge locked.`, timestamp: 'System' },
+    { role: 'bot', content: "Protocol initiated. I have flagged this vendor for a manual audit. We need to verify their last 30 days of micro-collections. How would you like to proceed?", timestamp: 'Just now' }
   ]);
   const [inputValue, setInputValue] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -55,23 +55,23 @@ export function ResolutionTerminal() {
 
     // Simulate bot response
     setTimeout(() => {
-      const isFinishing = content.toLowerCase().includes('authorize') || messages.length > 5;
+      const isFinishing = content.toLowerCase().includes('authorize') || content.toLowerCase().includes('satisfy') || messages.length > 5;
       
       if (isFinishing) {
         setMessages(prev => [...prev, { 
           role: 'system', 
-          content: "PROTOCOL_SUCCESS: All investor requirements verified. Bridge active.", 
+          content: "AUDIT_SUCCESS: Regional risk factors suppressed. Node bridge restored.", 
           timestamp: 'Just now' 
         }, { 
           role: 'bot', 
-          content: "Protocol satisfied. You can now close the terminal to authorize the final disbursement. All regional warnings have been suppressed.", 
+          content: "Audit satisfied. You can now close the terminal to authorize the final disbursement. All regional warnings have been cleared for this node.", 
           timestamp: 'Just now' 
         }]);
         setTimeout(() => setIsResolved(true), 500);
       } else {
         setMessages(prev => [...prev, { 
           role: 'bot', 
-          content: "Understood. Analyzing 'Money at Hand' liquidity. We need to confirm the regional disbursement schedule to satisfy the primary investor board.", 
+          content: "Understood. Analyzing regional micro-collection logs. I'm cross-referencing with local GST filings to verify node stability.", 
           timestamp: 'Just now' 
         }]);
       }
@@ -90,7 +90,7 @@ export function ResolutionTerminal() {
               <h1 className="text-2xl text-[#075056] font-light">Resolution Terminal</h1>
               <div className="flex items-center space-x-2">
                  <div className="w-1.5 h-1.5 rounded-full bg-[#FF5B04] animate-pulse"></div>
-                 <p className="text-[10px] uppercase tracking-widest text-[#075056]/40">Secured Dispatch: {id || 'SEC_99'}</p>
+                 <p className="text-[10px] uppercase tracking-widest text-[#075056]/40">Active Audit: {id || 'SEC_NODE'}</p>
               </div>
            </div>
         </div>

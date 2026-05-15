@@ -106,7 +106,7 @@ export function Intelligence() {
             <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">98.4% Uptime</span>
           </div>
         </div>
-        <div className="rounded-[40px] overflow-hidden border border-[#E4EEF0] bg-white p-2 h-[350px] md:h-[500px] shadow-sm">
+        <div className="h-[750px] rounded-[40px] overflow-hidden border border-[#E4EEF0] bg-white p-2 shadow-sm">
           <GeoMap />
         </div>
       </div>

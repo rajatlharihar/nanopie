@@ -73,18 +73,18 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   const [queue, setQueue] = useState<QueueItem[]>([
     {
       id: "v-1",
-      vendorName: "Rajesh & Sons Logistics",
+      vendorName: "Punjab Dairy Farm",
       type: "New Vendor",
       trustStatus: "Verified",
       suggestedAction: "Recommend Approval",
       suggestionReason: "High revenue consistency (85th percentile) and verified tax filings. CIBIL score 810 indicates elite credibility.",
-      category: "Supply Chain",
-      location: "Mumbai, MH",
+      category: "Agri-tech",
+      location: "Ludhiana, PB",
       kycStatus: "Fully Verified",
       verified: true,
       cibilScore: 810,
       platformRating: 'A',
-      summary: "Logistics partner for western region distribution.",
+      summary: "Dairy production partner for northern region distribution.",
       signals: [
         { label: "GST Compliance", status: "Stable", description: "Regular filings for the last 24 months." },
         { label: "Bank Statements", status: "Normal", description: "Healthy cash flow in HDFC accounts." }
@@ -95,27 +95,27 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
         { type: "History", active: true }
       ],
       request: {
-        amount: "₹12,40,000",
-        purpose: "Expansion of delivery fleet",
+        amount: "₹95,000",
+        purpose: "Expansion of pasteurization line",
         returnType: "Fixed Interest"
       }
     },
     {
       id: "v-2",
-      vendorName: "Aman Deep Tech Solutions",
+      vendorName: "Chennai Chipsets",
       type: "Funding Request",
       trustStatus: "Risk",
       suggestedAction: "High Risk Flag",
-      suggestionReason: "Recent drop in active user counts (-30%) and inconsistent server spends. CIBIL score 620 is below threshold for direct approval.",
-      category: "IT Services",
-      location: "Bangalore, KA",
+      suggestionReason: "Recent drop in production yields (-12%) and robotics integration risks. CIBIL score 680 is below threshold for direct approval.",
+      category: "Electronics",
+      location: "Chennai, TN",
       kycStatus: "Partially Verified",
       verified: false,
-      cibilScore: 620,
-      platformRating: 'C',
-      summary: "Cloud infrastructure provider for internal tools.",
+      cibilScore: 680,
+      platformRating: 'B',
+      summary: "Micro-electronics assembly node.",
       signals: [
-        { label: "Active Users", status: "Inconsistent", description: "30% drop in active sessions since Oct." },
+        { label: "Production Yield", status: "Inconsistent", description: "12% drop in yield since integration." },
         { label: "Revenue Growth", status: "Stagnant", description: "No new contracts signed in Q4." }
       ],
       trustIndicators: [
@@ -124,8 +124,8 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
         { type: "History", active: true }
       ],
       request: {
-        amount: "₹45,00,000",
-        purpose: "R&D for AI modules",
+        amount: "₹85,000",
+        purpose: "Robotics Precision Soldering",
         returnType: "Equity"
       }
     }
@@ -133,7 +133,7 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   
   const [recentDecisions, setRecentDecisions] = useState<Decision[]>([
     { id: "d1", target: "Punjab Dairy Farm", action: "Approved", timestamp: "2h ago" },
-    { id: "d2", target: "Surat Silk Mills", action: "Rejected", timestamp: "5h ago" },
+    { id: "d2", target: "Surat Silk Mills", action: "Approved", timestamp: "5h ago" },
   ]);
 
   const [complaints, setComplaints] = useState<Complaint[]>([
@@ -142,9 +142,9 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   ]);
 
   const [collections, setCollections] = useState<Collection[]>([
-    { id: "col1", storeName: "Punjab Dairy", currentAmount: 500000, investors: 12, status: "Secured" },
-    { id: "col2", storeName: "Bengal Spices", currentAmount: 1200000, investors: 45, status: "Processing" },
-    { id: "col3", storeName: "Kashmiri Crafts", currentAmount: 250000, investors: 8, status: "Risk" },
+    { id: "col1", storeName: "Punjab Dairy Farm", currentAmount: 85000, investors: 12, status: "Secured" },
+    { id: "col2", storeName: "Bengal Spices", currentAmount: 58000, investors: 45, status: "Processing" },
+    { id: "col3", storeName: "Kashmiri Crafts", currentAmount: 38000, investors: 8, status: "Risk" },
   ]);
 
   const resolveComplaint = (id: string) => {

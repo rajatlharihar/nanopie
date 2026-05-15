@@ -47,10 +47,10 @@ export function AdminDashboard() {
   const [showNotification, setShowNotification] = useState(true);
 
   const pendingVerification = [
-    { id: "V-9012", name: "Banaras Handlooms", status: "Limited Data", risk: "Low", category: "Handicrafts" },
-    { id: "V-9011", name: "Surat Silk Mills", status: "Risk", risk: "High", category: "Textile" },
-    { id: "V-9010", name: "Punjab Dairy", status: "Verified", risk: "Low", category: "Agriculture" },
-    { id: "V-9009", name: "Bengal Spices", status: "Limited Data", risk: "Medium", category: "Food" },
+    { id: "v1", name: "Punjab Dairy Farm", status: "Verified", risk: "Low", category: "Agri-tech" },
+    { id: "v2", name: "Surat Silk Mills", status: "Risk", risk: "High", category: "Manufacturing" },
+    { id: "v3", name: "Hindustan Logistics", status: "Limited Data", risk: "Medium", category: "Services" },
+    { id: "v4", name: "Kashmiri Crafts", status: "Verified", risk: "Low", category: "Handicrafts" },
   ];
 
   const filteredQueue = useMemo(() => {
@@ -79,42 +79,44 @@ export function AdminDashboard() {
             initial={{ opacity: 0, x: 20, y: -20 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-            className="fixed top-6 right-6 md:top-10 md:right-10 z-[100] w-[calc(100%-3rem)] md:w-[440px] bg-white/80 backdrop-blur-2xl rounded-[32px] p-6 shadow-2xl border border-white/50 group overflow-hidden"
+            className="fixed top-24 right-6 md:top-28 md:right-10 z-[100] w-[calc(100%-3rem)] md:w-[440px] bg-[#FF5B04] rounded-[32px] p-6 shadow-2xl shadow-[#FF5B04]/30 group overflow-hidden border border-white/10"
           >
-            {/* Criticality Indicator Bar */}
-            <div className="absolute top-0 left-0 bottom-0 w-2 bg-[#FF5B04]"></div>
-            
-            <div className="flex gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-[#FF5B04]/10 flex items-center justify-center shrink-0">
-                <AlertTriangle size={28} className="text-[#FF5B04] animate-pulse" />
+            <div className="flex gap-5 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
+                <AlertTriangle size={28} className="text-white animate-pulse" />
               </div>
               
               <div className="flex-1 space-y-1 pr-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-widest text-[#FF5B04] font-bold">Critical Risk Alert</span>
+                  <span className="text-[10px] uppercase tracking-widest text-white/70 font-bold">Critical Risk Alert</span>
                   <button 
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowNotification(false);
                     }}
-                    className="absolute top-6 right-6 p-1.5 rounded-full hover:bg-black/5 text-[#075056]/40 transition-colors"
+                    className="absolute top-0 right-0 p-1.5 rounded-full hover:bg-white/10 text-white/60 transition-colors"
                   >
                     <X size={16} />
                   </button>
                 </div>
-                <h2 className="text-lg font-bold text-[#075056] leading-tight">Surat Silk Mills</h2>
-                <p className="text-xs text-[#075056]/60 leading-relaxed">
-                  System detected <span className="font-bold text-[#FF5B04]">82% risk</span> of regional network failure.
+                <h2 className="text-lg font-bold text-white leading-tight">Surat Silk Mills</h2>
+                <p className="text-xs text-white/80 leading-relaxed">
+                  System detected <span className="font-bold text-white">82% risk</span> of regional network failure.
                 </p>
                 <div className="pt-4">
                   <button 
-                    onClick={() => navigate('/analysis/RESCUE_77')}
-                    className="w-full md:w-auto px-6 py-2.5 bg-[#075056] text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all"
+                    onClick={() => navigate('/vendors/v2')}
+                    className="w-full md:w-auto px-6 py-2.5 bg-[#075056] text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-[#075056] transition-all"
                   >
                     Analyze Now
                   </button>
                 </div>
               </div>
+            </div>
+            
+            {/* Subtle background icon for texture */}
+            <div className="absolute -bottom-4 -right-4 opacity-10 rotate-12">
+              <AlertTriangle size={120} className="text-white" />
             </div>
           </motion.div>
         )}
@@ -168,7 +170,10 @@ export function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4 md:px-0">
         <div className="space-y-1 text-center md:text-left">
           <h1 className="text-2xl md:text-4xl text-[#075056] tracking-tight">Security Terminal</h1>
-          <p className="text-xs md:text-sm text-[#075056]/40">Active surveillance of Indian vendor nodes.</p>
+          <p className="text-xs md:text-sm text-[#075056]/40">
+            {systemMode === 'Growth' ? 'Aggressive expansion monitoring active.' : 
+             systemMode === 'High Verification' ? 'Enhanced scrutiny mode engaged.' : 'Active surveillance of Indian vendor nodes.'}
+          </p>
         </div>
         
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
@@ -242,20 +247,6 @@ export function AdminDashboard() {
         {/* Left Column: Alerts & Operational Queue */}
         <div className="col-span-12 lg:col-span-8 space-y-12">
           
-          {/* GEOSPATIAL INTELLIGENCE PREVIEW */}
-          <div className="space-y-6 px-4 md:px-0">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Globe size={20} className="text-[#075056]/20 shrink-0" />
-                <h2 className="text-lg md:text-xl text-[#075056]">Regional Surveillance</h2>
-              </div>
-              <Link to="/intelligence" className="text-[10px] text-[#FF5B04] uppercase tracking-widest font-bold hover:underline">Full Map</Link>
-            </div>
-            <div className="rounded-[32px] overflow-hidden border border-[#E4EEF0] shadow-inner bg-white/50 p-2 h-[300px] md:h-auto">
-              <GeoMap />
-            </div>
-          </div>
-
           {/* ATTENTION REQUIRED - PROACTIVE MONITORING */}
           <div className="space-y-6 px-4 md:px-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -265,17 +256,26 @@ export function AdminDashboard() {
                 </div>
                 <h2 className="text-lg md:text-xl text-[#075056]">Attention Required</h2>
               </div>
-              <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">3 Clusters Detected</span>
+              <span className="text-[10px] uppercase tracking-widest text-orange-600 font-bold">
+                {systemMode === 'Growth' ? '5 Clusters Detected' : 
+                 systemMode === 'High Verification' ? '1 Cluster Detected' : '3 Clusters Detected'}
+              </span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[
-                { name: 'Kashmiri Crafts', issue: 'Slow Growth', score: 64, impact: 'Medium' },
-                { name: 'Bengal Spices', issue: 'Inconsistent Returns', score: 58, impact: 'High' },
-                { name: 'Surat Silk Mills', issue: 'Liquidity Drop', score: 42, impact: 'Critical' }
-              ].map(item => (
-                <div key={item.name} className="bg-white p-5 rounded-[24px] border border-[#E4EEF0] space-y-4 hover:shadow-lg transition-all border-l-4 border-l-orange-500">
+                { id: 'v3', name: 'Hindustan Logistics', issue: 'Fleet Burn Rate', score: 64, impact: 'Medium', visible: ['Standard', 'Growth'] },
+                { id: 'v5', name: 'Bengal Spices', issue: 'Yield Variance', score: 58, impact: 'High', visible: ['Standard', 'Growth', 'High Verification'] },
+                { id: 'v2', name: 'Surat Silk Mills', issue: 'Liquidity Drop', score: 42, impact: 'Critical', visible: ['Standard', 'Growth'] },
+                { id: 'v1', name: 'Punjab Dairy Farm', issue: 'Audit Deviation', score: 72, impact: 'Low', visible: ['Growth'] },
+                { id: 'v6', name: 'Chennai Chipsets', issue: 'Robotics Integration', score: 35, impact: 'Critical', visible: ['Growth'] }
+              ].filter(item => item.visible.includes(systemMode)).map(item => (
+                <div 
+                  key={item.name} 
+                  onClick={() => navigate(`/vendors/${item.id}`)}
+                  className="bg-white p-5 rounded-[24px] border border-[#E4EEF0] space-y-4 hover:shadow-lg transition-all cursor-pointer group"
+                >
                   <div className="space-y-1">
-                    <h4 className="text-sm font-medium text-[#075056]">{item.name}</h4>
+                    <h4 className="text-sm font-medium text-[#075056] group-hover:text-[#FF5B04] transition-colors">{item.name}</h4>
                     <p className="text-[10px] text-orange-600 font-bold">{item.issue}</p>
                   </div>
                   <div className="flex justify-between items-end">
@@ -306,7 +306,6 @@ export function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 {complaints.map((comp) => (
                   <motion.div 
-                    layout
                     key={comp.id}
                     className="bg-white border-2 border-[#FF5B04]/10 rounded-[24px] md:rounded-[32px] p-6 space-y-4 hover:border-[#FF5B04]/30 transition-all"
                   >
