@@ -27,7 +27,8 @@ import {
   Globe,
   Settings2,
   Rocket,
-  ZapOff
+  ZapOff,
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link, useNavigate } from "react-router";
@@ -43,6 +44,7 @@ export function AdminDashboard() {
   const [showWidgetPanel, setShowWidgetPanel] = useState(false);
   const [showReportOptions, setShowReportOptions] = useState(false);
   const [activeWidgets, setActiveWidgets] = useState(['pending', 'complaints', 'collections', 'activity']);
+  const [showNotification, setShowNotification] = useState(true);
 
   const pendingVerification = [
     { id: "V-9012", name: "Banaras Handlooms", status: "Limited Data", risk: "Low", category: "Handicrafts" },
@@ -70,29 +72,53 @@ export function AdminDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 md:space-y-12 pb-32 px-0 md:px-4 lg:px-12">
-      {/* High Alert Intervention Notification */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        onClick={() => navigate('/analysis/RESCUE_77')}
-        className="bg-[#FF5B04] rounded-none md:rounded-[32px] p-6 md:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer hover:scale-[1.01] transition-all shadow-xl shadow-[#FF5B04]/20 overflow-hidden relative group"
-      >
-        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform">
-          <ShieldAlert size={100} />
-        </div>
-        <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 relative z-10 text-center md:text-left">
-          <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
-            <AlertTriangle size={32} className="animate-pulse" />
-          </div>
-          <div className="space-y-1">
-            <h2 className="text-lg md:text-2xl font-light">Urgent Intervention Required: <span className="font-bold">Surat Silk Mills</span></h2>
-            <p className="text-xs md:text-sm text-white/60">System detected 82% risk of regional network failure. AI analysis ready for review.</p>
-          </div>
-        </div>
-        <button className="w-full md:w-auto px-8 py-4 bg-[#075056] text-white rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#075056] transition-all relative z-10 shrink-0">
-          Analyze Risk Now
-        </button>
-      </motion.div>
+      {/* High Alert Intervention Notification Pop-up */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div 
+            initial={{ opacity: 0, x: 20, y: -20 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+            className="fixed top-6 right-6 md:top-10 md:right-10 z-[100] w-[calc(100%-3rem)] md:w-[440px] bg-white/80 backdrop-blur-2xl rounded-[32px] p-6 shadow-2xl border border-white/50 group overflow-hidden"
+          >
+            {/* Criticality Indicator Bar */}
+            <div className="absolute top-0 left-0 bottom-0 w-2 bg-[#FF5B04]"></div>
+            
+            <div className="flex gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-[#FF5B04]/10 flex items-center justify-center shrink-0">
+                <AlertTriangle size={28} className="text-[#FF5B04] animate-pulse" />
+              </div>
+              
+              <div className="flex-1 space-y-1 pr-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase tracking-widest text-[#FF5B04] font-bold">Critical Risk Alert</span>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowNotification(false);
+                    }}
+                    className="absolute top-6 right-6 p-1.5 rounded-full hover:bg-black/5 text-[#075056]/40 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                <h2 className="text-lg font-bold text-[#075056] leading-tight">Surat Silk Mills</h2>
+                <p className="text-xs text-[#075056]/60 leading-relaxed">
+                  System detected <span className="font-bold text-[#FF5B04]">82% risk</span> of regional network failure.
+                </p>
+                <div className="pt-4">
+                  <button 
+                    onClick={() => navigate('/analysis/RESCUE_77')}
+                    className="w-full md:w-auto px-6 py-2.5 bg-[#075056] text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all"
+                  >
+                    Analyze Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* System Mode Selector & Stats Bar */}
       <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between bg-white/40 backdrop-blur-md p-6 md:rounded-[32px] border-y md:border border-[#E4EEF0] mx-0 md:mx-0">
