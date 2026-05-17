@@ -371,25 +371,43 @@ export function VendorDetail() {
             </div>
           </div>
 
-          {/* Contact Details */}
-          <div className="bg-white border border-[#E4EEF0] md:rounded-[48px] p-6 md:p-8 space-y-6 shadow-sm rounded-[32px]">
-            <h3 className="text-xs md:text-sm font-bold text-[#075056] uppercase tracking-widest px-2">Contact Details</h3>
-            <div className="grid grid-cols-1 gap-4">
-              {[
-                { label: 'Mobile Node', val: '+91 98765 43210', icon: Phone },
-                { label: 'Primary Email', val: 'contact@nanopie.com', icon: Mail }
-              ].map((info, i) => (
-                <div key={i} className="flex items-center space-x-4 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:border-[#075056]/20 transition-all cursor-pointer">
-                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#075056]/20 shadow-sm shrink-0">
-                    <info.icon size={16} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#075056]/30 font-bold">{info.label}</p>
-                    <p className="text-[11px] md:text-sm text-[#075056] font-medium truncate">{info.val}</p>
-                  </div>
-                </div>
-              ))}
+          {/* Direct Chat & Communications */}
+          <div className="bg-white border border-[#E4EEF0] md:rounded-[48px] p-6 md:p-8 space-y-6 shadow-sm rounded-[32px] relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-6 opacity-5 hidden sm:block">
+              <MessageSquare size={80} />
             </div>
+            <div className="space-y-1 relative z-10">
+              <p className="text-[9px] uppercase tracking-[0.2em] text-[#075056]/40 font-bold">Encrypted Comms</p>
+              <h3 className="text-base md:text-lg font-light text-[#075056]">Direct Chat</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-4 relative z-10">
+              <div className="flex items-center space-x-4 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:border-[#FF5B04]/30 transition-all cursor-pointer group">
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#FF5B04] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
+                  <MessageSquare size={16} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] md:text-sm text-[#075056] font-medium truncate">Open Secure Chat</p>
+                  <p className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#075056]/40 font-bold">Vendor is Online</p>
+                </div>
+                <ExternalLink size={14} className="text-[#075056]/20 group-hover:text-[#FF5B04]" />
+              </div>
+              
+              <div className="flex items-center space-x-4 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:border-[#075056]/20 transition-all cursor-pointer">
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#075056]/20 shadow-sm shrink-0">
+                  <Phone size={16} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#075056]/30 font-bold">Mobile Node</p>
+                  <p className="text-[11px] md:text-sm text-[#075056] font-medium truncate">+91 98765 43210</p>
+                </div>
+              </div>
+            </div>
+            
+            <button className="relative z-10 w-full py-4 bg-[#075056] text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all shadow-xl shadow-[#075056]/10 flex items-center justify-center space-x-2">
+              <Zap size={14} className="text-[#FF5B04]" />
+              <span>Send Urgent Request</span>
+            </button>
           </div>
         </div>
       </div>
