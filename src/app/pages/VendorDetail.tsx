@@ -383,7 +383,10 @@ export function VendorDetail() {
             </div>
             
             <div className="grid grid-cols-1 gap-4 relative z-10">
-              <div className="flex items-center space-x-4 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:border-[#FF5B04]/30 transition-all cursor-pointer group">
+              <div 
+                onClick={() => navigate(`/resolve/${vendor.id}`)}
+                className="flex items-center space-x-4 p-4 bg-[#F8FAFC] rounded-2xl border border-[#E4EEF0] hover:border-[#FF5B04]/30 transition-all cursor-pointer group"
+              >
                 <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#FF5B04] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
                   <MessageSquare size={16} />
                 </div>
@@ -405,7 +408,10 @@ export function VendorDetail() {
               </div>
             </div>
             
-            <button className="relative z-10 w-full py-4 bg-[#075056] text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all shadow-xl shadow-[#075056]/10 flex items-center justify-center space-x-2">
+            <button 
+              onClick={() => navigate(`/resolve/${vendor.id}`)}
+              className="relative z-10 w-full py-4 bg-[#075056] text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-[#FF5B04] transition-all shadow-xl shadow-[#075056]/10 flex items-center justify-center space-x-2"
+            >
               <Zap size={14} className="text-[#FF5B04]" />
               <span>Send Urgent Request</span>
             </button>
