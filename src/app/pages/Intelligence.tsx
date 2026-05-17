@@ -83,7 +83,7 @@ export function Intelligence() {
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <div className="flex items-center space-x-2 bg-white border border-[#E4EEF0] px-4 py-2.5 rounded-2xl text-[9px] md:text-[10px] text-[#075056] font-bold w-full sm:w-auto justify-center">
             <LocateFixed size={14} className="text-[#FF5B04]" />
-            <span>INDIA REGION: ACTIVE</span>
+            <span>CENTRAL BLR: ACTIVE</span>
           </div>
           <button className="flex items-center justify-center space-x-2 bg-[#075056] text-white px-6 py-3 md:py-2.5 rounded-2xl text-[10px] md:text-xs hover:opacity-90 transition-all shadow-lg shadow-[#075056]/20 w-full sm:w-auto">
             <Download size={14} />

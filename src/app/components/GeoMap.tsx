@@ -6,11 +6,11 @@ import { MOCK_VENDORS, Vendor } from "../data";
 export function GeoMap() {
   const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
 
-  // Simplified markers for Indian cities based on coordinates
+  // Simplified markers for Central Bangalore based on coordinates
   const markers = MOCK_VENDORS.map(v => ({
     ...v,
-    x: ((v.lng - 68) / (97 - 68)) * 100, // Normalize longitude to 0-100%
-    y: 100 - ((v.lat - 8) / (37 - 8)) * 100, // Normalize latitude to 0-100%
+    x: ((v.lng - 77.55) / 0.1) * 100, // Normalize longitude around Bangalore (77.55 to 77.65)
+    y: 100 - ((v.lat - 12.95) / 0.05) * 100, // Normalize latitude around Bangalore (12.95 to 13.00)
   }));
 
   const riskZones = [
@@ -20,21 +20,26 @@ export function GeoMap() {
 
   return (
     <div className="relative w-full h-full bg-[#075056]/5 rounded-[40px] border border-[#E4EEF0] overflow-hidden group">
-      {/* Actual India Map Background Silhouette */}
+      {/* Abstract City Grid/Radar Background */}
       <div className="absolute inset-0 flex items-center justify-center opacity-[0.08] pointer-events-none p-12">
-        <svg viewBox="0 0 100 100" className="w-full h-full max-w-[600px] text-[#075056]" fill="currentColor">
-          <path d="M50,5 C55,8 60,5 65,10 C70,15 68,25 72,30 C76,35 85,38 88,45 C91,52 85,65 80,75 C75,85 65,92 55,95 C45,98 35,95 25,90 C15,85 5,75 8,65 C11,55 20,45 25,35 C30,25 35,15 42,10 C45,8 48,5 50,5 Z" />
-          {/* Simple representative shape of India - a bit more refined than a circle */}
-          <path d="M51.5 5.5L54 8.5L57 10L61.5 12L65 16L68 19L72 23L75 28L78.5 33L82 39L84 46L85.5 54L84.5 61L81 68L76 74L70 80L63 85L55 89L46 91L37 91L29 88L22 83L17 76L13 68L10 59L9.5 50L11.5 41L15 33L20 26L26 20L33 14L41 9L48 6.5L51.5 5.5Z" />
-          {/* More accurate India outline (simplified) */}
-          <path d="M48.5,4.5 C52.2,4.8 55.4,7.4 58.1,9.8 C61.2,12.5 64.1,15.6 67.2,18.5 C70.5,21.6 74.2,24.5 77.4,27.8 C80.4,30.9 83.1,34.5 85.3,38.5 C87.3,42.4 88.5,46.8 88.8,51.2 C89.1,55.9 88.2,60.6 86.4,65.0 C84.5,69.5 81.6,73.5 77.9,76.8 C73.9,80.4 69.1,83.1 64.1,85.2 C58.9,87.4 53.3,88.7 47.7,88.9 C42.1,89.1 36.4,88.4 31.1,86.6 C26.1,84.9 21.4,82.3 17.5,78.8 C13.9,75.6 11.1,71.7 9.3,67.3 C7.5,62.8 6.8,58.0 7.2,53.2 C7.6,48.4 9.1,43.8 11.5,39.7 C14.0,35.4 17.4,31.7 21.3,28.6 C25.4,25.4 30.1,23.0 35.1,21.5 C39.6,20.2 44.3,19.6 48.9,19.8 C53.4,20.0 57.8,21.1 61.9,23.0" fill="none" stroke="currentColor" strokeWidth="0.5" />
+        <svg viewBox="0 0 100 100" className="w-full h-full max-w-[600px] text-[#075056]" fill="none" stroke="currentColor" strokeWidth="0.5">
+          {/* Concentric Circles */}
+          <circle cx="50" cy="50" r="10" />
+          <circle cx="50" cy="50" r="25" />
+          <circle cx="50" cy="50" r="40" strokeDasharray="2,2" />
+          <circle cx="50" cy="50" r="55" />
+          {/* Grid Lines */}
+          <line x1="50" y1="0" x2="50" y2="100" />
+          <line x1="0" y1="50" x2="100" y2="50" />
+          <line x1="15" y1="15" x2="85" y2="85" strokeDasharray="1,3" />
+          <line x1="15" y1="85" x2="85" y2="15" strokeDasharray="1,3" />
         </svg>
       </div>
 
       {/* Map Labels */}
       <div className="absolute top-8 left-8 space-y-1 z-10">
         <h3 className="text-xl text-[#075056] font-light">Ecosystem Geography</h3>
-        <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Live Node Distribution • India</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#075056]/40 font-bold">Live Node Distribution • Central Bangalore</p>
       </div>
 
       {/* Map Controls */}

@@ -88,13 +88,13 @@ export interface Investment {
 export const MOCK_VENDORS: Vendor[] = [
   {
     id: 'v1',
-    name: "Punjab Dairy Farm",
+    name: "Cubbon Park Organics",
     category: 'Agri-tech',
-    description: 'Specializing in high-yield milk production and automated pasteurization.',
-    upgradePlan: 'Automation of milk pasteurization line and expansion of cold storage.',
-    location: 'Ludhiana, PB',
-    lat: 30.9010,
-    lng: 75.8573,
+    description: 'Specializing in high-yield urban farming and automated hydroponics.',
+    upgradePlan: 'Automation of hydroponic lines and expansion of cold storage.',
+    location: 'Ashok Nagar, BLR',
+    lat: 12.9730,
+    lng: 77.6010,
     fundingGoal: 95000,
     raisedAmount: 85000,
     investorsCount: 24,
@@ -115,12 +115,12 @@ export const MOCK_VENDORS: Vendor[] = [
       { month: 'Apr', amount: 51000 }, { month: 'May', amount: 54000 }, { month: 'Jun', amount: 58000 }
     ],
     competitors: [
-      { name: 'Local Dairies', share: 45, color: 'bg-[#075056]' },
-      { name: "Punjab Dairy", share: 32, color: 'bg-[#FF5B04]' },
+      { name: 'Local Farms', share: 45, color: 'bg-[#075056]' },
+      { name: "Cubbon Organics", share: 32, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 23, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
-      { user: 'Amit S.', comment: 'Purest milk in Ludhiana.', rating: 5 },
+      { user: 'Amit S.', comment: 'Purest greens in Ashok Nagar.', rating: 5 },
       { user: 'Gurpreet K.', comment: 'Reliable delivery every morning.', rating: 5 }
     ],
     documents: [
@@ -134,19 +134,19 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     insightNotification: {
       title: 'Automation Efficiency Gain',
-      description: 'The new pasteurization line has reduced energy costs by 18%. Recommend re-investing surplus.',
+      description: 'The new hydroponic line has reduced energy costs by 18%. Recommend re-investing surplus.',
       actionLabel: 'Audit Energy'
     }
   },
   {
     id: 'v2',
-    name: 'Surat Silk Mills',
+    name: 'Commercial Street Silks',
     category: 'Manufacturing',
-    description: 'Premium silk weaving and distribution for global luxury brands.',
+    description: 'Premium silk weaving and distribution for local luxury boutiques.',
     upgradePlan: 'High-speed power loom installation to triple production output.',
-    location: 'Surat, GJ',
-    lat: 21.1702,
-    lng: 72.8311,
+    location: 'Shivajinagar, BLR',
+    lat: 12.9820,
+    lng: 77.6080,
     fundingGoal: 98000,
     raisedAmount: 92000,
     investorsCount: 42,
@@ -168,7 +168,7 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     competitors: [
       { name: 'Regional Mills', share: 50, color: 'bg-[#075056]' },
-      { name: 'Surat Silk', share: 25, color: 'bg-[#FF5B04]' },
+      { name: 'Comm Street Silks', share: 25, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 25, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
@@ -186,19 +186,19 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     insightNotification: {
       title: 'Regional Supply Chain Fluctuation',
-      description: 'Raw silk prices have spiked in the GJ cluster. Verify contract pricing.',
+      description: 'Raw silk prices have spiked in the Shivajinagar cluster. Verify contract pricing.',
       actionLabel: 'Verify Contracts'
     }
   },
   {
     id: 'v3',
-    name: 'Hindustan Logistics',
+    name: 'Indiranagar Cold Chain',
     category: 'Services',
     description: 'Specialized logistics for pharmaceutical and cold-chain goods.',
     upgradePlan: 'Cold-chain fleet expansion with 5 new refrigerated trucks.',
-    location: 'Mumbai, MH',
-    lat: 19.0760,
-    lng: 72.8777,
+    location: 'Indiranagar, BLR',
+    lat: 12.9780,
+    lng: 77.6380,
     fundingGoal: 100000,
     raisedAmount: 45000,
     investorsCount: 8,
@@ -220,11 +220,11 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     competitors: [
       { name: 'Global Logistics', share: 70, color: 'bg-[#075056]' },
-      { name: 'Hindustan', share: 10, color: 'bg-[#FF5B04]' },
+      { name: 'Indiranagar Cold', share: 10, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 20, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
-      { user: 'Sanjay R.', comment: 'Struggling with maintenance costs.', rating: 2 },
+      { user: 'Sanjay R.', comment: 'Struggling with traffic delays.', rating: 2 },
       { user: 'Vikram A.', comment: 'Good intent, but execution is lagging.', rating: 3 }
     ],
     documents: [
@@ -244,13 +244,13 @@ export const MOCK_VENDORS: Vendor[] = [
   },
   {
     id: 'v4',
-    name: 'Kashmiri Crafts',
+    name: 'Ulsoor Handicrafts',
     category: 'Handicrafts',
-    description: 'Traditional Pashmina weaving and walnut wood carving.',
+    description: 'Traditional wood carving and pottery.',
     upgradePlan: 'Artisan e-commerce platform development to bypass middlemen.',
-    location: 'Srinagar, JK',
-    lat: 34.0837,
-    lng: 74.7973,
+    location: 'Ulsoor, BLR',
+    lat: 12.9780,
+    lng: 77.6240,
     fundingGoal: 40000,
     raisedAmount: 38000,
     investorsCount: 15,
@@ -272,12 +272,12 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     competitors: [
       { name: 'State Emporium', share: 55, color: 'bg-[#075056]' },
-      { name: 'Kashmiri Crafts', share: 20, color: 'bg-[#FF5B04]' },
+      { name: 'Ulsoor Crafts', share: 20, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 25, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
-      { user: 'Zaid H.', comment: 'Best walnut carving I have ever seen.', rating: 5 },
-      { user: 'Sarah L.', comment: 'The Pashmina is incredibly soft.', rating: 5 }
+      { user: 'Zaid H.', comment: 'Best sandalwood carving I have ever seen.', rating: 5 },
+      { user: 'Sarah L.', comment: 'The pottery is incredibly detailed.', rating: 5 }
     ],
     documents: [
       { name: 'Handicraft ID', status: 'Attached', date: '05 Apr 2024', type: 'Identity' },
@@ -296,13 +296,13 @@ export const MOCK_VENDORS: Vendor[] = [
   },
   {
     id: 'v5',
-    name: 'Bengal Spices',
+    name: 'Richmond Town Spices',
     category: 'Food & Bev',
     description: 'Organic spice processing and organic farm-to-table supply.',
     upgradePlan: 'Solar-powered spice dehydration unit to maintain nutrient density.',
-    location: 'Kolkata, WB',
-    lat: 22.5726,
-    lng: 88.3639,
+    location: 'Richmond Town, BLR',
+    lat: 12.9660,
+    lng: 77.5960,
     fundingGoal: 65000,
     raisedAmount: 58000,
     investorsCount: 31,
@@ -324,7 +324,7 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     competitors: [
       { name: 'Mass Brands', share: 65, color: 'bg-[#075056]' },
-      { name: 'Bengal Spices', share: 15, color: 'bg-[#FF5B04]' },
+      { name: 'Richmond Spices', share: 15, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 20, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
@@ -348,13 +348,13 @@ export const MOCK_VENDORS: Vendor[] = [
   },
   {
     id: 'v6',
-    name: 'Chennai Chipsets',
+    name: 'SP Road Electronics',
     category: 'Electronics',
     description: 'Micro-electronics assembly and precision soldering.',
     upgradePlan: 'Precision soldering robotics for high-density component boards.',
-    location: 'Chennai, TN',
-    lat: 13.0827,
-    lng: 80.2707,
+    location: 'SP Road, BLR',
+    lat: 12.9640,
+    lng: 77.5790,
     fundingGoal: 85000,
     raisedAmount: 42000,
     investorsCount: 12,
@@ -376,7 +376,7 @@ export const MOCK_VENDORS: Vendor[] = [
     ],
     competitors: [
       { name: 'Component Co.', share: 45, color: 'bg-[#075056]' },
-      { name: 'Chennai Chipset', share: 20, color: 'bg-[#FF5B04]' },
+      { name: 'SP Road Traders', share: 20, color: 'bg-[#FF5B04]' },
       { name: 'Others', share: 35, color: 'bg-[#E4EEF0]' }
     ],
     reviews: [
