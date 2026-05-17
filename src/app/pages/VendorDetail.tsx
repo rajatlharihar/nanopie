@@ -19,7 +19,8 @@ import {
   Users,
   Star,
   Layers,
-  Activity
+  Activity,
+  MessageSquare
 } from "lucide-react";
 import { 
   ResponsiveContainer,
