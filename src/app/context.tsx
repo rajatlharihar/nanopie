@@ -73,7 +73,7 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   const [queue, setQueue] = useState<QueueItem[]>([
     {
       id: "v-1",
-      vendorName: "Punjab Dairy Farm",
+      vendorName: "Cubbon Park Organics",
       type: "New Vendor",
       trustStatus: "Verified",
       suggestedAction: "Recommend Approval",
@@ -102,7 +102,7 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
     },
     {
       id: "v-2",
-      vendorName: "Chennai Chipsets",
+      vendorName: "SP Road Electronics",
       type: "Funding Request",
       trustStatus: "Risk",
       suggestedAction: "High Risk Flag",
@@ -132,19 +132,19 @@ export function StakeholderProvider({ children }: { children: ReactNode }) {
   ]);
   
   const [recentDecisions, setRecentDecisions] = useState<Decision[]>([
-    { id: "d1", target: "Punjab Dairy Farm", action: "Approved", timestamp: "2h ago" },
-    { id: "d2", target: "Surat Silk Mills", action: "Approved", timestamp: "5h ago" },
+    { id: "d1", target: "Cubbon Park Organics", action: "Approved", timestamp: "2h ago" },
+    { id: "d2", target: "Commercial Street Silks", action: "Approved", timestamp: "5h ago" },
   ]);
 
   const [complaints, setComplaints] = useState<Complaint[]>([
-    { id: "c1", vendorName: "Bengal Spices", message: "Payment Gateway Timeout during bulk collection.", type: "Technical", priority: "Critical", timestamp: "10m ago", status: "Open" },
-    { id: "c2", vendorName: "Kashmiri Crafts", message: "Inventory Sync Error in regional warehouse.", type: "Logistics", priority: "High", timestamp: "1h ago", status: "Open" },
+    { id: "c1", vendorName: "Richmond Town Spices", message: "Payment Gateway Timeout during bulk collection.", type: "Technical", priority: "Critical", timestamp: "10m ago", status: "Open" },
+    { id: "c2", vendorName: "Ulsoor Handicrafts", message: "Inventory Sync Error in regional warehouse.", type: "Logistics", priority: "High", timestamp: "1h ago", status: "Open" },
   ]);
 
   const [collections, setCollections] = useState<Collection[]>([
-    { id: "col1", storeName: "Punjab Dairy Farm", currentAmount: 85000, investors: 12, status: "Secured" },
-    { id: "col2", storeName: "Bengal Spices", currentAmount: 58000, investors: 45, status: "Processing" },
-    { id: "col3", storeName: "Kashmiri Crafts", currentAmount: 38000, investors: 8, status: "Risk" },
+    { id: "col1", storeName: "Cubbon Park Organics", currentAmount: 85000, investors: 12, status: "Secured" },
+    { id: "col2", storeName: "Richmond Town Spices", currentAmount: 58000, investors: 45, status: "Processing" },
+    { id: "col3", storeName: "Ulsoor Handicrafts", currentAmount: 38000, investors: 8, status: "Risk" },
   ]);
 
   const resolveComplaint = (id: string) => {

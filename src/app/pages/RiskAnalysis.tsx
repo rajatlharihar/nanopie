@@ -39,7 +39,7 @@ const RISK_HISTORY = [
 ];
 
 const MITIGATION_STEPS = [
-  { id: 1, title: "Liquidity Injection", status: "Recommended", description: "Inject ₹5,00,000 into Surat Silk Mills node to prevent bankruptcy cascade." },
+  { id: 1, title: "Liquidity Injection", status: "Recommended", description: "Inject ₹5,00,000 into Commercial Street Silks node to prevent bankruptcy cascade." },
   { id: 2, title: "Logistics Rerouting", status: "Queued", description: "Divert regional shipments through Varanasi hub to bypass logistics failure." },
   { id: 3, title: "Stakeholder Notification", status: "Sent", description: "Automated alert sent to primary investors regarding regional volatility." },
 ];
@@ -89,7 +89,7 @@ export function RiskAnalysis() {
                       <AlertTriangle size={24} />
                    </div>
                    <div className="space-y-1">
-                      <h2 className="text-3xl font-light">Surat Silk Mills: <span className="text-[#FF5B04]">Critical Failure Warning</span></h2>
+                      <h2 className="text-3xl font-light">Commercial Street Silks: <span className="text-[#FF5B04]">Critical Failure Warning</span></h2>
                       <p className="text-xs text-white/40 uppercase tracking-widest">Regional Logistics Breakdown • Sector: Textile</p>
                    </div>
                 </div>

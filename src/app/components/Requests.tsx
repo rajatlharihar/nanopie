@@ -117,7 +117,7 @@ export function Requests() {
             ))
           ) : (
             [
-              { id: 'ret1', vendor: "Surat Silk Mills", amount: 450.00, profit: 45.00 },
+              { id: 'ret1', vendor: "Commercial Street Silks", amount: 450.00, profit: 45.00 },
               { id: 'ret2', vendor: "Pulse Coffee", amount: 1200.00, profit: 180.00 },
             ].map((ret) => (
               <div 

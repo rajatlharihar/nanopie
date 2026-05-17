@@ -55,12 +55,12 @@ export function Transactions() {
   const [authorizedId, setAuthorizedId] = useState<string | null>(null);
   
   const transactions = [
-    { id: "TX-9012", vendor: "Punjab Dairy Farm", amount: "₹1,20,000.00", type: "Investment", status: "Pending Review", date: "22 Apr 2026, 10:45 AM", risk: "Low", alert: false },
-    { id: "TX-9011", vendor: "Surat Silk Mills", amount: "₹45,000.00", type: "Payout", status: "Approved", date: "22 Apr 2026, 09:20 AM", risk: "Low", alert: false },
-    { id: "TX-9010", vendor: "Hindustan Logistics", amount: "₹8,90,000.00", type: "Funding", status: "Flagged", date: "21 Apr 2026, 04:15 PM", risk: "High", alert: true },
-    { id: "TX-9009", vendor: "Kashmiri Crafts", amount: "₹30,000.00", type: "Payout", status: "Approved", date: "21 Apr 2026, 02:30 PM", risk: "Low", alert: false },
-    { id: "TX-9008", vendor: "Bengal Spices", amount: "₹1,50,000.00", type: "Investment", status: "Approved", date: "20 Apr 2026, 11:10 AM", risk: "Low", alert: false },
-    { id: "TX-9007", vendor: "Chennai Chipsets", amount: "₹2,20,000.00", type: "Funding", status: "Rejected", date: "20 Apr 2026, 09:45 AM", risk: "Medium", alert: true },
+    { id: "TX-9012", vendor: "Cubbon Park Organics", amount: "₹1,20,000.00", type: "Investment", status: "Pending Review", date: "22 Apr 2026, 10:45 AM", risk: "Low", alert: false },
+    { id: "TX-9011", vendor: "Commercial Street Silks", amount: "₹45,000.00", type: "Payout", status: "Approved", date: "22 Apr 2026, 09:20 AM", risk: "Low", alert: false },
+    { id: "TX-9010", vendor: "Indiranagar Cold Chain", amount: "₹8,90,000.00", type: "Funding", status: "Flagged", date: "21 Apr 2026, 04:15 PM", risk: "High", alert: true },
+    { id: "TX-9009", vendor: "Ulsoor Handicrafts", amount: "₹30,000.00", type: "Payout", status: "Approved", date: "21 Apr 2026, 02:30 PM", risk: "Low", alert: false },
+    { id: "TX-9008", vendor: "Richmond Town Spices", amount: "₹1,50,000.00", type: "Investment", status: "Approved", date: "20 Apr 2026, 11:10 AM", risk: "Low", alert: false },
+    { id: "TX-9007", vendor: "SP Road Electronics", amount: "₹2,20,000.00", type: "Funding", status: "Rejected", date: "20 Apr 2026, 09:45 AM", risk: "Medium", alert: true },
   ];
 
   const highAlertItems = transactions.filter(tx => tx.alert);

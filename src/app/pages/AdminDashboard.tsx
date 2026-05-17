@@ -47,10 +47,10 @@ export function AdminDashboard() {
   const [showNotification, setShowNotification] = useState(true);
 
   const pendingVerification = [
-    { id: "v1", name: "Punjab Dairy Farm", status: "Verified", risk: "Low", category: "Agri-tech" },
-    { id: "v2", name: "Surat Silk Mills", status: "Risk", risk: "High", category: "Manufacturing" },
-    { id: "v3", name: "Hindustan Logistics", status: "Limited Data", risk: "Medium", category: "Services" },
-    { id: "v4", name: "Kashmiri Crafts", status: "Verified", risk: "Low", category: "Handicrafts" },
+    { id: "v1", name: "Cubbon Park Organics", status: "Verified", risk: "Low", category: "Agri-tech" },
+    { id: "v2", name: "Commercial Street Silks", status: "Risk", risk: "High", category: "Manufacturing" },
+    { id: "v3", name: "Indiranagar Cold Chain", status: "Limited Data", risk: "Medium", category: "Services" },
+    { id: "v4", name: "Ulsoor Handicrafts", status: "Verified", risk: "Low", category: "Handicrafts" },
   ];
 
   const filteredQueue = useMemo(() => {
@@ -99,7 +99,7 @@ export function AdminDashboard() {
                     <X size={16} />
                   </button>
                 </div>
-                <h2 className="text-lg font-bold text-white leading-tight">Surat Silk Mills</h2>
+                <h2 className="text-lg font-bold text-white leading-tight">Commercial Street Silks</h2>
                 <p className="text-xs text-white/80 leading-relaxed">
                   System detected <span className="font-bold text-white">82% risk</span> of regional network failure.
                 </p>
@@ -263,11 +263,11 @@ export function AdminDashboard() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[
-                { id: 'v3', name: 'Hindustan Logistics', issue: 'Fleet Burn Rate', score: 64, impact: 'Medium', visible: ['Standard', 'Growth'] },
-                { id: 'v5', name: 'Bengal Spices', issue: 'Yield Variance', score: 58, impact: 'High', visible: ['Standard', 'Growth', 'High Verification'] },
-                { id: 'v2', name: 'Surat Silk Mills', issue: 'Liquidity Drop', score: 42, impact: 'Critical', visible: ['Standard', 'Growth'] },
-                { id: 'v1', name: 'Punjab Dairy Farm', issue: 'Audit Deviation', score: 72, impact: 'Low', visible: ['Growth'] },
-                { id: 'v6', name: 'Chennai Chipsets', issue: 'Robotics Integration', score: 35, impact: 'Critical', visible: ['Growth'] }
+                { id: 'v3', name: 'Indiranagar Cold Chain', issue: 'Fleet Burn Rate', score: 64, impact: 'Medium', visible: ['Standard', 'Growth'] },
+                { id: 'v5', name: 'Richmond Town Spices', issue: 'Yield Variance', score: 58, impact: 'High', visible: ['Standard', 'Growth', 'High Verification'] },
+                { id: 'v2', name: 'Commercial Street Silks', issue: 'Liquidity Drop', score: 42, impact: 'Critical', visible: ['Standard', 'Growth'] },
+                { id: 'v1', name: 'Cubbon Park Organics', issue: 'Audit Deviation', score: 72, impact: 'Low', visible: ['Growth'] },
+                { id: 'v6', name: 'SP Road Electronics', issue: 'Robotics Integration', score: 35, impact: 'Critical', visible: ['Growth'] }
               ].filter(item => item.visible.includes(systemMode)).map(item => (
                 <div 
                   key={item.name} 

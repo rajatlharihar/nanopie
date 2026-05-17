@@ -409,7 +409,7 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     type: 'deposit',
     status: 'completed',
     date: '2024-03-10T10:00:00Z',
-    description: 'Collection from Amit Sharma for Punjab Dairy'
+    description: 'Collection from Amit Sharma for Cubbon Park Organics'
   },
   {
     id: 't2',
@@ -419,7 +419,7 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     type: 'deposit',
     status: 'pending',
     date: '2024-03-11T14:30:00Z',
-    description: 'Bulk Investment for Bengal Spices'
+    description: 'Bulk Investment for Richmond Town Spices'
   },
   {
     id: 't3',
@@ -439,7 +439,7 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
     type: 'deposit',
     status: 'completed',
     date: '2024-03-13T16:45:00Z',
-    description: 'Regional Fund Allocation - Surat Silk'
+    description: 'Regional Fund Allocation - Commercial Street Silks'
   }
 ];
 
